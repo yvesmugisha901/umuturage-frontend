@@ -1,0 +1,110 @@
+/* register.css */
+
+/* Full-page container below fixed navbar */
+.register-container {
+  min-height: 100vh;             /* full viewport height */
+  width: 100%;
+  padding: 90px 20px 20px;       /* top padding = navbar height */
+  box-sizing: border-box;
+
+  display: flex;
+  justify-content: center;        /* horizontal centering */
+  align-items: flex-start;        /* start below navbar */
+  background-color: #f6f6f6;
+}
+
+/* Registration box */
+.register-box {
+  background-color: #fff;
+  width: 100%;
+  max-width: 450px;               /* responsive max width */
+  padding: 30px 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100vh - 90px - 20px); /* fill remaining height */
+}
+
+/* Header */
+.register-box h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Form rows */
+.form-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Inputs */
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  outline: none;
+  box-sizing: border-box;
+}
+
+input:focus {
+  border-color: #007bff;
+}
+
+/* Submit button */
+.register-btn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.register-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Message */
+.message {
+  color: red;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Login link */
+.login-link {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.login-link a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 500px) {
+  .register-box {
+    padding: 20px;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+}

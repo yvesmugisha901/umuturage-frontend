@@ -7,6 +7,16 @@
   top: 0;
   z-index: 1000;
 }
+/* navbar.css */
+.navbar {
+  width: 100%;
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+
 
 .navbar-container {
   display: flex;
@@ -68,7 +78,7 @@
   padding: 6px;
   border-radius: 5px;
   border: 1px solid #ccc;
-  background-color: #fff;
+  background-color: #0f0e0e;
   cursor: pointer;
 }
 

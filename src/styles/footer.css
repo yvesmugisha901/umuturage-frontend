@@ -4,6 +4,29 @@
   border-top: 1px solid #e0e0e0;
   color: #333;
 }
+.footer  {
+  width: 100%;
+  background-color: #123452;
+ 
+  top: 0;
+
+}
+footer {
+  width: 100%;
+
+  padding: 40px 20px 20px;
+  border-top: 1px solid #e0e0e0;
+  color: #fff;
+  flex-shrink: 0;  /* prevents shrinking in flex container */
+}
+
+/* footer.css */
+footer {
+  width: 100%;
+  box-sizing: border-box;
+  position: relative; /* fixed if sticky footer is desired */
+  bottom: 0;
+}
 
 .footer-container {
   display: flex;

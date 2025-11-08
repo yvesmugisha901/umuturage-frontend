@@ -1,3 +1,53 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  font-family: "Poppins", sans-serif;
+}
+
+
+/* global.css or a new layout css */
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;   /* full viewport */
+  padding-top: 70px;   /* height of fixed Navbar */
+}
+
+/* Make register page grow */
+.register-container {
+  flex: 1;             /* take remaining space */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #f6f6f6;
+}
+
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;

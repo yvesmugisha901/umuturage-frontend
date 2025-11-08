@@ -6,7 +6,7 @@ import "../styles/home.css";
 const Home = () => {
   return (
     <>
-      <Navbar />
+    
 
       {/* Hero Section */}
       <section className="hero-section">
@@ -56,7 +56,7 @@ const Home = () => {
         <button className="cta-btn">Sign Up Now</button>
       </section>
 
-      <Footer />
+   
     </>
   );
 };
