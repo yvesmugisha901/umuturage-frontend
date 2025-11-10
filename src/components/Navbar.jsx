@@ -1,5 +1,6 @@
 import React from "react";
 import "../styles/navbar.css";
+import { Link } from "react-router-dom"; // ✅ Import Link
 
 const Navbar = () => {
   return (
@@ -15,17 +16,38 @@ const Navbar = () => {
 
         {/* Navigation Links */}
         <ul className="nav-links">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Features</a></li>
-           <li><a href="#">Households</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <a href="#">Features</a>
+          </li>
+          <li>
+            <a href="#">Households</a>
+          </li>
+          <li>
+            <a href="#">About</a>
+          </li>
+          <li>
+            <a href="#">Contact</a>
+          </li>
         </ul>
 
         {/* Right side buttons */}
         <div className="nav-actions">
-          <button className="login-btn">Login</button>
-          <button className="register-btn">Register</button>
+          <Link
+            to="/login"
+            className="login-btn"
+          >
+            Login
+          </Link>
+
+          <Link
+            to="/register"
+            className="register-btn"
+          >
+            Register
+          </Link>
 
           {/* Language selector */}
           <select className="language-selector">

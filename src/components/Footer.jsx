@@ -20,8 +20,8 @@ const Footer = () => {
         <div className="footer-socials">
           <h4>Follow Us</h4>
           <div className="social-icons">
-            <a href="#"><img src="https://via.placeholder.com/40?text=FB" alt="Facebook" /></a>
-            <a href="#"><img src="https://via.placeholder.com/40?text=TW" alt="Twitter" /></a>
+            <a href="#"><img src="https://via.placeholder.com/40?text=FB" alt="Facebook" /></a><br />
+            <a href="#"><img src="https://via.placeholder.com/40?text=TW" alt="Twitter" /></a><br />
             <a href="#"><img src="https://via.placeholder.com/40?text=IG" alt="Instagram" /></a>
           </div>
         </div>
