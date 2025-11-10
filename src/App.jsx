@@ -23,28 +23,24 @@ import './styles/districtDashboard.css';
 function App() {
   return (
     <Router>
-      <Routes>
-        {/* Public Pages */}
-        <Route 
-          path="/" 
-          element={<><Navbar /><Home /><Footer /></>} 
-        />
-        <Route 
-          path="/register" 
-          element={<><Navbar /><Register /><Footer /></>} 
-        />
-        <Route 
-          path="/login" 
-          element={<><Navbar /><Login /><Footer /></>} 
-        />
+      {/* Navbar visible on all pages */}
+      <Navbar />
 
-        {/* Dashboard Pages */}
-        <Route 
-          path="/dashboard/district" 
-          element={<><Navbar /><DistrictDashboard /><Footer /></>} 
-        />
+      {/* Main page content wrapper */}
+      <div className="page-container">
+        <Routes>
+          {/* Public Pages */}
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
 
-      </Routes>
+          {/* Dashboard Pages */}
+          <Route path="/dashboard/district" element={<DistrictDashboard />} />
+        </Routes>
+      </div>
+
+      {/* Footer visible on all pages */}
+      <Footer />
     </Router>
   );
 }

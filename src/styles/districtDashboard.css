@@ -112,3 +112,45 @@
 .action-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
 .action-btn { background-color: #1a73e8; color: white; padding: 10px 18px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem; transition: 0.3s; }
 .action-btn:hover { background-color: #155ab6; }
+
+
+
+
+
+
+.pending-approvals {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin-bottom: 30px;
+}
+.pending-approvals h2 {
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+.approvals-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+.approvals-table th, .approvals-table td {
+  padding: 6px 8px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+.approvals-table tr:hover {
+  background-color: #f1f3f5;
+}
+.approvals-table button {
+  margin-right: 5px;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: 0.2s;
+}
+.approvals-table button:hover { opacity: 0.8; }
+.approved { color: green; font-weight: bold; }
+.rejected { color: red; font-weight: bold; }

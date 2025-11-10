@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Line, Doughnut } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -39,13 +39,13 @@ const DistrictDashboard = () => {
     { date: "2025-11-08", activity: "Generated monthly report", status: "✅ Completed" },
   ]);
 
-  // Notifications from lower levels for approval
-  const [notifications, setNotifications] = useState([
-    { id: 1, message: "New household data submitted", status: "pending" },
-    { id: 2, message: "Monthly report submitted", status: "pending" },
+  // Pending approvals from lower levels
+  const [pendingApprovals, setPendingApprovals] = useState([
+    { id: 1, type: "Household", submittedBy: "Cell Leader", message: "New household data submitted", status: "pending" },
+    { id: 2, type: "Report", submittedBy: "Sector Officer", message: "Monthly report submitted", status: "pending" },
   ]);
 
-  // Chart data
+  // Charts
   const populationChart = {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
     datasets: [
@@ -70,42 +70,21 @@ const DistrictDashboard = () => {
     ],
   };
 
-  // Handle Approve/Reject notifications
   const handleApproval = (id, decision) => {
-    setNotifications((prev) =>
-      prev.map((note) =>
-        note.id === id ? { ...note, status: decision } : note
-      )
+    setPendingApprovals((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, status: decision } : item))
     );
   };
 
   return (
     <div className="district-dashboard">
-      {/* Header + Notifications */}
+      {/* Header */}
       <header className="dashboard-header">
         <h1>{districtData.name}</h1>
         <p>Overview of households, sectors, and community performance</p>
-        <div className="notification-bell">
-          🔔
-          <div className="notification-dropdown">
-            {notifications.length === 0 && <p>No notifications</p>}
-            {notifications.map((note) => (
-              <div key={note.id} className={`notification-item ${note.status}`}>
-                <span>{note.message}</span>
-                {note.status === "pending" && (
-                  <div className="notification-actions">
-                    <button onClick={() => handleApproval(note.id, "approved")}>✅ Approve</button>
-                    <button onClick={() => handleApproval(note.id, "rejected")}>❌ Reject</button>
-                  </div>
-                )}
-                {note.status !== "pending" && <span className={`status ${note.status}`}>{note.status.toUpperCase()}</span>}
-              </div>
-            ))}
-          </div>
-        </div>
       </header>
 
-      {/* KPI Cards (clickable) */}
+      {/* KPI Cards */}
       <section className="cards-container">
         <div className="card blue clickable" onClick={() => alert("Go to Population Details")}>
           <h3>Total Population</h3>
@@ -139,6 +118,44 @@ const DistrictDashboard = () => {
             <Doughnut data={householdChart} options={{ maintainAspectRatio: false }} />
           </div>
         </div>
+      </section>
+
+      {/* Pending Approvals */}
+      <section className="pending-approvals">
+        <h2>Pending Approvals</h2>
+        {pendingApprovals.length === 0 ? (
+          <p>No pending submissions</p>
+        ) : (
+          <table className="approvals-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Submitted By</th>
+                <th>Message</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {pendingApprovals.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.type}</td>
+                  <td>{item.submittedBy}</td>
+                  <td>{item.message}</td>
+                  <td>
+                    {item.status === "pending" ? (
+                      <>
+                        <button onClick={() => handleApproval(item.id, "approved")}>✅ Approve</button>
+                        <button onClick={() => handleApproval(item.id, "rejected")}>❌ Reject</button>
+                      </>
+                    ) : (
+                      <span className={item.status}>{item.status.toUpperCase()}</span>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </section>
 
       {/* Recent Activities */}

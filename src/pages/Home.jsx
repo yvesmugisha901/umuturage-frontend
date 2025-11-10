@@ -1,14 +1,10 @@
 import React from "react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import { Link } from "react-router-dom"; // ✅ Import Link
 import "../styles/home.css";
 
 const Home = () => {
   return (
-    <>
-     
-
+    <div className="home-page">
       {/* Hero Section */}
       <section className="hero-section">
         <div className="hero-container">
@@ -16,7 +12,6 @@ const Home = () => {
           <p>
             Efficiently manage households, track data, and support your community.
           </p>
-          {/* Link instead of button */}
           <Link to="/register" className="cta-btn">
             Get Started
           </Link>
@@ -66,14 +61,11 @@ const Home = () => {
         <p>
           Join hundreds of users benefiting from streamlined household management.
         </p>
-        {/* Link instead of button */}
         <Link to="/register" className="cta-btn">
           Sign Up Now
         </Link>
       </section>
-
-      
-    </>
+    </div>
   );
 };
 
