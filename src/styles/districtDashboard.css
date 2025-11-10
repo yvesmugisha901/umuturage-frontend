@@ -1,0 +1,114 @@
+.district-dashboard {
+  padding: 30px;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  position: relative;
+}
+
+/* Header */
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 30px;
+  position: relative;
+}
+.dashboard-header h1 { font-size: 2rem; color: #2c3e50; }
+.dashboard-header p { color: #555; }
+
+/* Notification Bell */
+.notification-bell {
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+.notification-dropdown {
+  display: none;
+  position: absolute;
+  top: 35px;
+  right: 0;
+  width: 280px;
+  background: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  border-radius: 8px;
+  padding: 10px;
+  z-index: 10;
+}
+.notification-bell:hover .notification-dropdown {
+  display: block;
+}
+.notification-item {
+  padding: 8px 5px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.notification-actions button {
+  margin-right: 5px;
+  font-size: 0.8rem;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.notification-actions button:hover { opacity: 0.8; }
+.status.approved { color: green; font-weight: bold; }
+.status.rejected { color: red; font-weight: bold; }
+
+/* KPI Cards */
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 15px;
+  margin-bottom: 40px;
+}
+.card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+.card:hover { transform: translateY(-5px); cursor: pointer; }
+.card h3 { font-size: 1rem; margin-bottom: 8px; }
+.card p { font-size: 1.2rem; font-weight: bold; }
+.card.blue { background-color: #e8f0fe; color: #1a73e8; }
+.card.green { background-color: #e6f4ea; color: #34a853; }
+.card.orange { background-color: #fff4e5; color: #fbbc04; }
+.card.purple { background-color: #f3e8ff; color: #a142f4; }
+
+/* Charts */
+.charts-section {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+  justify-content: center;
+}
+.chart-placeholder {
+  flex: 1 1 300px;
+  max-width: 400px;
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  text-align: center;
+}
+.chart-box { height: 200px; width: 100%; display: flex; align-items: center; justify-content: center; margin-top: 10px; }
+
+/* Activities Table */
+.activities-section { background: white; padding: 15px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); margin-bottom: 30px; }
+.activities-section h2 { margin-bottom: 10px; color: #2c3e50; }
+.activities-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.activities-table th, .activities-table td { padding: 6px 8px; border-bottom: 1px solid #ddd; text-align: left; }
+.activities-table tr:hover { background-color: #f1f3f5; }
+
+/* Quick Actions */
+.quick-actions { text-align: center; }
+.quick-actions h2 { margin-bottom: 15px; color: #2c3e50; }
+.action-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.action-btn { background-color: #1a73e8; color: white; padding: 10px 18px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem; transition: 0.3s; }
+.action-btn:hover { background-color: #155ab6; }
