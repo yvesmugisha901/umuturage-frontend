@@ -1,5 +1,5 @@
 /* ================================
-   DISTRICT DASHBOARD MAIN CONTAINER
+   SECTOR DASHBOARD MAIN CONTAINER
 ================================== */
 .dashboard-wrapper {
   display: flex;
@@ -49,11 +49,6 @@
   box-shadow: 0 3px 10px rgba(0,0,0,0.08);
   transition: 0.3s ease;
   text-align: center;
-  cursor: default;
-}
-
-.cards-container .card.clickable {
-  cursor: pointer;
 }
 
 .cards-container .card:hover {
@@ -75,11 +70,7 @@
 /* ================================
           SECTIONS
 ================================== */
-.section,
-.charts-section,
-.pending-approvals,
-.activities-section,
-.quick-actions {
+.section {
   background: white;
   padding: 20px;
   border-radius: 12px;
@@ -87,11 +78,7 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
-.section h2,
-.charts-section h4,
-.pending-approvals h2,
-.activities-section h2,
-.quick-actions h2 {
+.section h2 {
   margin-bottom: 15px;
   color: #1a1a1a;
   font-size: 22px;
@@ -101,119 +88,59 @@
 /* ================================
           TABLES
 ================================== */
-.approvals-table,
-.activities-table {
+.data-table {
   width: 100%;
   border-collapse: collapse;
   background: white;
 }
 
-.approvals-table thead,
-.activities-table thead {
+.data-table thead {
   background: #2c3e50;
   color: white;
 }
 
-.approvals-table th,
-.approvals-table td,
-.activities-table th,
-.activities-table td {
+.data-table th, 
+.data-table td {
   padding: 12px 15px;
   border-bottom: 1px solid #eee;
   text-align: left;
   font-size: 15px;
 }
 
-.approvals-table tbody tr:hover,
-.activities-table tbody tr:hover {
+.data-table tbody tr:hover {
   background: #f1f4f9;
 }
 
 /* ================================
-       APPROVAL BUTTONS
+        ACTION BUTTONS
 ================================== */
-.approvals-table button {
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: none;
+.btn-approve {
+  background: #27ae60;
   color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
   cursor: pointer;
   margin-right: 5px;
   transition: 0.3s ease;
 }
 
-.approvals-table button:first-child {
-  background: #27ae60;
-}
-
-.approvals-table button:first-child:hover {
+.btn-approve:hover {
   background: #1e8a4d;
 }
 
-.approvals-table button:last-child {
+.btn-reject {
   background: #e74c3c;
-}
-
-.approvals-table button:last-child:hover {
-  background: #c0392b;
-}
-
-/* Approved/Rejected Status */
-.approvals-table span.approved {
-  color: #27ae60;
-  font-weight: 600;
-}
-
-.approvals-table span.rejected {
-  color: #e74c3c;
-  font-weight: 600;
-}
-
-/* ================================
-         CHARTS
-================================== */
-.charts-section {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.chart-placeholder {
-  flex: 1;
-  min-width: 300px;
-}
-
-.chart-placeholder h4 {
-  font-size: 18px;
-  margin-bottom: 10px;
-}
-
-.chart-box {
-  height: 300px;
-  padding: 10px;
-}
-
-/* ================================
-      QUICK ACTION BUTTONS
-================================== */
-.action-buttons {
-  display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-
-.action-btn {
-  padding: 12px 20px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
   color: white;
-  background: #3498db;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
   transition: 0.3s ease;
 }
 
-.action-btn:hover {
-  background: #217dbb;
+.btn-reject:hover {
+  background: #c0392b;
 }
 
 /* ================================
@@ -234,8 +161,8 @@
     padding: 20px;
   }
 
-  .charts-section {
-    flex-direction: column;
+  .cards-container .card {
+    width: 45%;
   }
 }
 

@@ -9,38 +9,42 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+
+// Dashboards
 import DistrictDashboard from "./pages/dashboards/DistrictDashboard";
+import SectorDashboard from "./pages/dashboards/sectordashboard";
+import CellDashboard from "./pages/dashboards/Celldashboard";
+import IsiboDashboard from "./pages/dashboards/isibodashboard";
 
 // Styles
-import './styles/global.css';
-import './styles/navbar.css';
-import './styles/footer.css';
-import './styles/home.css';
-import './styles/register.css';
-import './styles/login.css';
-import './styles/districtDashboard.css';
+import "./styles/global.css";
+import "./styles/navbar.css";
+import "./styles/footer.css";
+import "./styles/home.css";
+import "./styles/register.css";
+import "./styles/login.css";
+import "./styles/districtDashboard.css";
+import "./styles/sectorDashboard.css";
+import "./styles/cellDashboard.css";
+import "./styles/isiboDashboard.css";
 
 function App() {
   return (
     <Router>
-      {/* Navbar visible on all pages */}
-      <Navbar />
-
-      {/* Main page content wrapper */}
-      <div className="page-container">
+      <div className="app-container">
         <Routes>
-          {/* Public Pages */}
-          <Route path="/" element={<Home />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
+          {/* Public Pages with Navbar */}
+          <Route path="/" element={<><Navbar /><Home /><Footer /></>} />
+          <Route path="/register" element={<><Navbar /><Register /><Footer /></>} />
+          <Route path="/login" element={<><Navbar /><Login /><Footer /></>} />
 
-          {/* Dashboard Pages */}
+          {/* Dashboard Pages with Sidebar + Footer */}
           <Route path="/dashboard/district" element={<DistrictDashboard />} />
+          <Route path="/dashboard/sector" element={<SectorDashboard />} />
+          <Route path="/dashboard/cell" element={<CellDashboard />} />
+          <Route path="/dashboard/isibo" element={<IsiboDashboard />} />
         </Routes>
       </div>
-
-      {/* Footer visible on all pages */}
-      <Footer />
     </Router>
   );
 }

@@ -1,23 +1,24 @@
-/* register.css */
-
-/* Full-page container below fixed navbar */
+/* ==============================
+   Register Page Container
+============================== */
 .register-container {
-  min-height: 100vh;             /* full viewport height */
+  min-height: calc(100vh - 60px); /* full viewport minus footer height approximation */
   width: 100%;
-  padding: 90px 20px 20px;       /* top padding = navbar height */
+  padding: 90px 20px 20px;
   box-sizing: border-box;
 
   display: flex;
-  justify-content: center;        /* horizontal centering */
-  align-items: flex-start;        /* start below navbar */
+  justify-content: center;
+  align-items: flex-start;
   background-color: #f6f6f6;
+  flex-direction: column;
 }
 
 /* Registration box */
 .register-box {
   background-color: #fff;
   width: 100%;
-  max-width: 450px;               /* responsive max width */
+  max-width: 450px;
   padding: 30px 40px;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -26,7 +27,6 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: calc(100vh - 90px - 20px); /* fill remaining height */
 }
 
 /* Header */
@@ -96,6 +96,18 @@ input:focus {
 
 .login-link a:hover {
   text-decoration: underline;
+}
+
+/* Footer spacing fix */
+body, html {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.register-container {
+  flex: 1; /* ensures container grows to push footer down */
 }
 
 /* Responsive adjustments */

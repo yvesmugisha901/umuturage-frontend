@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../styles/login.css"; // create this CSS file similar to register.css
+import "../styles/login.css";
+import Footer from "../components/Footer"; // ✅ include the Footer
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -14,7 +15,6 @@ const Login = () => {
     setError("");
 
     try {
-      // Replace with your backend login API
       const response = await axios.post("http://localhost:5000/api/login", {
         email,
         password,
@@ -22,11 +22,9 @@ const Login = () => {
 
       const user = response.data;
 
-      // Example: store token if backend returns one
       localStorage.setItem("token", user.token);
       localStorage.setItem("role", user.role);
 
-      // Role-based redirect
       switch (user.role) {
         case "isibo":
           navigate("/dashboard/isibo");
@@ -50,26 +48,29 @@ const Login = () => {
   };
 
   return (
-    <div className="login-page">
-      <form className="login-form" onSubmit={handleSubmit}>
-        <h2>Login</h2>
-        {error && <p className="error">{error}</p>}
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Login</button>
-      </form>
+    <div className="page-wrapper"> {/* wrap everything for flex layout */}
+      <div className="login-page">
+        <form className="login-form" onSubmit={handleSubmit}>
+          <h2>Login</h2>
+          {error && <p className="error">{error}</p>}
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button type="submit">Login</button>
+        </form>
+      </div>
+     
     </div>
   );
 };

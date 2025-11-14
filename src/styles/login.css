@@ -1,11 +1,20 @@
+/* Ensure the page takes full height and footer sticks to bottom */
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* full height */
+}
+
+/* Center login content vertically (if more content, it grows naturally) */
 .login-page {
+  flex: 1; /* fills remaining space */
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 120px); /* adjust if Navbar/Footer included */
   background-color: #f5f5f5;
 }
 
+/* Login form styles */
 .login-form {
   background: white;
   padding: 2rem;
