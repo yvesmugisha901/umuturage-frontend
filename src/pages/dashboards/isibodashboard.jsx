@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Sidebar from "../../components/sidebars/Sidebar";
 import Footer from "../../components/Footer";
 import "../../styles/isiboDashboard.css";
 
@@ -28,72 +27,64 @@ const IsiboDashboard = () => {
   };
 
   return (
-    <div className="dashboard-wrapper">
-      {/* Sidebar */}
-      <Sidebar level="isibo" />
+    <div className="page-with-sidebar">
+      <div className="dashboard-main">
+        <main className="dashboard-content">
+          <header className="dashboard-header">
+            <h1>Isibo Dashboard</h1>
+            <p>Manage households and send updates to your Cell leader.</p>
+          </header>
 
-      {/* Main Content */}
-      <main className="dashboard-content">
-        <header className="dashboard-header">
-          <h1>Isibo Dashboard</h1>
-          <p>Manage households and send updates to your Cell leader.</p>
-        </header>
+          <section className="cards-container">
+            <div className="card blue">
+              <h3>Total Households</h3>
+              <p>{households.length}</p>
+            </div>
+            <div className="card green">
+              <h3>New Requests Sent</h3>
+              <p>{totalRequestsSent}</p>
+            </div>
+            <div className="card orange">
+              <h3>Pending Approvals</h3>
+              <p>–</p>
+            </div>
+          </section>
 
-        {/* Stat Cards */}
-        <section className="cards-container">
-          <div className="card blue">
-            <h3>Total Households</h3>
-            <p>{households.length}</p>
-          </div>
-          <div className="card green">
-            <h3>New Requests Sent</h3>
-            <p>{totalRequestsSent}</p>
-          </div>
-          <div className="card orange">
-            <h3>Pending Approvals</h3>
-            <p>–</p>
-          </div>
-        </section>
+          <section className="section">
+            <h2>Add New Household</h2>
+            <form className="form" onSubmit={addHousehold}>
+              <input type="text" name="head" placeholder="Head of Household Name" required />
+              <input type="number" name="members" placeholder="Number of Members" required />
+              <input type="text" name="location" placeholder="House Number / Location" required />
+              <button className="btn-submit">Submit Household</button>
+            </form>
+          </section>
 
-        {/* Add Household Form */}
-        <section className="section">
-          <h2>Add New Household</h2>
-          <form className="form" onSubmit={addHousehold}>
-            <input type="text" name="head" placeholder="Head of Household Name" required />
-            <input type="number" name="members" placeholder="Number of Members" required />
-            <input type="text" name="location" placeholder="House Number / Location" required />
-            <button className="btn-submit">Submit Household</button>
-          </form>
-        </section>
-
-        {/* Household Table */}
-        <section className="section">
-          <h2>Existing Households</h2>
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th>Household Head</th>
-                <th>Members</th>
-                <th>Location</th>
-                <th>Date Added</th>
-              </tr>
-            </thead>
-            <tbody>
-              {households.map((h) => (
-                <tr key={h.id}>
-                  <td>{h.head}</td>
-                  <td>{h.members}</td>
-                  <td>{h.location}</td>
-                  <td>{h.date}</td>
+          <section className="section">
+            <h2>Existing Households</h2>
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th>Household Head</th>
+                  <th>Members</th>
+                  <th>Location</th>
+                  <th>Date Added</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </section>
-
-        {/* Footer */}
-        <Footer />
-      </main>
+              </thead>
+              <tbody>
+                {households.map((h) => (
+                  <tr key={h.id}>
+                    <td>{h.head}</td>
+                    <td>{h.members}</td>
+                    <td>{h.location}</td>
+                    <td>{h.date}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </section>
+        </main>
+      </div>
     </div>
   );
 };

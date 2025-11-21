@@ -1,0 +1,157 @@
+.calendar-page {
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.calendar-container {
+  width: 90%;
+  max-width: 900px;
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  transition: 0.3s ease;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.calendar-header h2 {
+  margin: 0;
+}
+
+.calendar-header button {
+  padding: 6px 14px;
+  border: none;
+  background: var(--btn-bg);
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.calendar-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+}
+
+.calendar-day-name {
+  padding: 10px 0;
+  font-weight: bold;
+  opacity: 0.7;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.calendar-date {
+  padding: 15px 0;
+  background: var(--card-hover);
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+  transition: 0.2s ease;
+}
+
+.calendar-date:hover {
+  background: var(--card-hover-strong);
+}
+
+.today {
+  border: 2px solid var(--accent);
+  font-weight: bold;
+}
+
+.event-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  border-radius: 50%;
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* -------- EVENT MODAL -------- */
+
+.event-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0008;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.event-box {
+  width: 40%;
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+.event-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px;
+  margin: 4px 0;
+  background: var(--card-hover);
+  border-radius: 6px;
+}
+
+.add-event-btn,
+.close-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  background: var(--accent);
+  color: white;
+  border-radius: 8px;
+}
+
+.close-btn {
+  background: #444;
+}
+
+.delete-btn {
+  background: none;
+  color: red;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* -------- DARK MODE VARIABLES -------- */
+
+:root {
+  --accent: #4f46e5;
+  --btn-bg: #4f46e5;
+
+  --card-bg: #ffffff;
+  --card-hover: #f1f1f1;
+  --card-hover-strong: #e5e5e5;
+
+  --shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+html.dark {
+  --card-bg: #1f1f1f;
+  --card-hover: #2a2a2a;
+  --card-hover-strong: #333;
+
+  --shadow: 0 4px 16px rgba(0,0,0,0.4);
+}

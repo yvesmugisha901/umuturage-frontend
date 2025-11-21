@@ -1,14 +1,14 @@
 .sidebar {
-  width: 260px;
-  background-color: #102542;
-  color: white;
+  width: 250px;
+  background-color: #f0f0f1;
+  color: rgb(255, 255, 255);
   height: 100vh;
   padding: 20px;
   position: fixed;
   left: 0;
   top: 0;
   overflow-y: auto;
-  box-shadow: 3px 0 10px rgba(0,0,0,0.2);
+  box-shadow: 1px 0 5px rgba(0,0,0,0.2);
 }
 
 .sidebar-header h2 {
@@ -31,7 +31,7 @@
   padding-left: 10px;
   font-size: 14px;
   font-weight: bold;
-  color: #9bbcd1;
+  color: #5e859d;
   text-transform: uppercase;
 }
 
@@ -44,7 +44,7 @@
   align-items: center;
   gap: 12px;
   text-decoration: none;
-  color: #d7e3f2;
+  color: #13161a;
   padding: 12px;
   border-radius: 6px;
   font-size: 16px;
@@ -62,7 +62,7 @@
 }
 
 .logout a {
-  color: #ff6b6b;
+  color: #fdfdfd;
 }
 
 .logout a:hover {

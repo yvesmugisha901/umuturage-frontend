@@ -64,3 +64,37 @@ p {
 footer {
   width: 100%;
 }
+/* ============================== */
+/* FOOTER LAYOUT FIX (UNIVERSAL) */
+/* ============================== */
+
+footer {
+  background-color: #123452;
+  color: #cbd1d7;
+  padding: 40px 20px 20px;
+  border-top: 1px solid #e0e0e0;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+/* 🟢 Pages WITH sidebar */
+.with-sidebar footer {
+  width: calc(100% - 250px);     /* subtract sidebar width */
+  margin-left: 250px;            /* align to main content */
+}
+
+/* 🔵 Pages WITHOUT sidebar */
+.no-sidebar footer,
+footer.no-sidebar {
+  width: 100%;
+  margin-left: 0;
+}
+
+/* Mobile fix */
+@media (max-width: 768px) {
+  .with-sidebar footer {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+

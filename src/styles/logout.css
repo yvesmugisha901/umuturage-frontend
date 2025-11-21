@@ -1,0 +1,84 @@
+.logout-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg);
+  font-family: "Inter", sans-serif;
+}
+
+.logout-card {
+  background: var(--card-bg);
+  padding: 30px;
+  width: 380px;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  transition: 0.3s ease;
+}
+
+.logout-card h2 {
+  margin-bottom: 10px;
+  font-size: 28px;
+  color: var(--text-primary);
+}
+
+.logout-card p {
+  color: var(--text-secondary);
+  margin-bottom: 25px;
+  font-size: 15px;
+}
+
+.buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.btn {
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: 0.2s ease;
+}
+
+.cancel {
+  background: var(--btn-cancel);
+  color: var(--text-primary);
+}
+
+.cancel:hover {
+  background: #c9c9c9;
+}
+
+.logout {
+  background: var(--btn-logout);
+  color: white;
+}
+
+.logout:hover {
+  background: #c9302c;
+}
+
+/* DARK MODE VARIABLES */
+:root {
+  --bg: #f7f9fc;
+  --card-bg: #fff;
+  --shadow: 0 8px 20px rgba(0,0,0,0.1);
+  --text-primary: #222;
+  --text-secondary: #555;
+  --btn-cancel: #ddd;
+  --btn-logout: #d9534f;
+}
+
+html.dark {
+  --bg: #1f1f1f;
+  --card-bg: #2a2a2a;
+  --shadow: 0 8px 20px rgba(0,0,0,0.4);
+  --text-primary: #eee;
+  --text-secondary: #aaa;
+  --btn-cancel: #444;
+  --btn-logout: #d9534f;
+}

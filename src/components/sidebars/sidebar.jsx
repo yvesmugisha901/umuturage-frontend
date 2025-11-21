@@ -9,7 +9,8 @@ import {
   FaCalendarAlt,
   FaSignOutAlt,
   FaCheckCircle,
-  FaChartBar
+  FaChartBar,
+  FaCog
 } from "react-icons/fa";
 
 const Sidebar = ({ level }) => {
@@ -99,19 +100,76 @@ const Sidebar = ({ level }) => {
         )}
 
         {/* ------------------------------- */}
-        {/*         COMMON FEATURES         */}
+        {/*        USER-BASED FEATURES      */}
         {/* ------------------------------- */}
-        <div className="sidebar-section-title">General</div>
+
+        {level === "isibo" && (
+          <>
+            <li>
+              <Link to="/dashboard/isibo/reports">
+                <FaClipboardList className="icon" /> Reports
+              </Link>
+            </li>
+            <li>
+              <Link to="/dashboard/isibo/notifications">
+                <FaBell className="icon" /> Notifications
+              </Link>
+            </li>
+          </>
+        )}
+
+        {level === "cell" && (
+          <>
+            <li>
+              <Link to="/dashboard/cell/reports">
+                <FaClipboardList className="icon" /> Reports
+              </Link>
+            </li>
+            <li>
+              <Link to="/dashboard/cell/notifications">
+                <FaBell className="icon" /> Notifications
+              </Link>
+            </li>
+          </>
+        )}
+
+        {level === "sector" && (
+          <>
+            <li>
+              <Link to="/dashboard/sector/reports">
+                <FaClipboardList className="icon" /> Reports
+              </Link>
+            </li>
+            <li>
+              <Link to="/dashboard/sector/notifications">
+                <FaBell className="icon" /> Notifications
+              </Link>
+            </li>
+          </>
+        )}
+
+        {level === "district" && (
+          <>
+            <li>
+              <Link to="/dashboard/district/reports">
+                <FaClipboardList className="icon" /> Reports
+              </Link>
+            </li>
+            <li>
+              <Link to="/dashboard/district/notifications">
+                <FaBell className="icon" /> Notifications
+              </Link>
+            </li>
+          </>
+        )}
+
+        {/* ------------------------------- */}
+        {/*     COMMON FOR ALL USERS       */}
+        {/* ------------------------------- */}
 
         <li>
-          <Link to="/reports">
-            <FaClipboardList className="icon" /> Reports
-          </Link>
-        </li>
-
-        <li>
-          <Link to="/notifications">
-            <FaBell className="icon" /> Notifications
+          <Link to="/settings">
+            <FaCog className="icon" /> Settings
           </Link>
         </li>
 

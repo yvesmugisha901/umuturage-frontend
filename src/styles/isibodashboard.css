@@ -1,20 +1,23 @@
-/* ============ DASHBOARD WRAPPER ============ */
-.dashboard-wrapper {
+/* ================= DASHBOARD WRAPPER ================= */
+.page-with-sidebar {
   display: flex;
   min-height: 100vh;
   font-family: "Inter", sans-serif;
   background: #f5f7fa;
 }
 
-/* ============ MAIN CONTENT ============ */
-.dashboard-content {
-  flex: 1;
+/* ================= SIDEBAR-AWARE MAIN CONTENT ================= */
+
+
+
+.dashboard-main main {
+  flex: 1;            /* makes main content grow to push footer down */
   padding: 30px;
-  display: flex;
-  flex-direction: column;
+  box-sizing: border-box; /* important for width + padding alignment */
+   margin-left: 250px;
 }
 
-/* ============ HEADER ============ */
+/* ================= HEADER ================= */
 .dashboard-header {
   margin-bottom: 25px;
 }
@@ -30,7 +33,9 @@
   font-size: 16px;
 }
 
-/* ============ STAT CARDS ============ */
+
+
+/* ================= STAT CARDS ================= */
 .cards-container {
   display: flex;
   gap: 20px;
@@ -65,7 +70,7 @@
   color: #2980b9;
 }
 
-/* ============ SECTIONS ============ */
+/* ================= SECTIONS ================= */
 .section {
   background: white;
   padding: 20px;
@@ -80,7 +85,7 @@
   color: #2c3e50;
 }
 
-/* ============ FORM ============ */
+/* ================= FORM ================= */
 .form {
   display: flex;
   gap: 15px;
@@ -108,7 +113,7 @@
   background: #217dbb;
 }
 
-/* ============ TABLE ============ */
+/* ================= TABLE ================= */
 .data-table {
   width: 100%;
   border-collapse: collapse;
@@ -129,18 +134,19 @@
   background: #f1f4f9;
 }
 
-/* ============ FOOTER ============ */
-footer {
-  margin-top: auto;
-  padding: 20px;
-  background: #2c3e50;
-  color: white;
-  text-align: center;
-  border-radius: 0 0 12px 12px;
+/* ================= FOOTER ================= */
+.dashboard-main footer {
+  width: 100%;       /* full content width */
+  margin-left: 250px;    /* footer aligned with content */
+  
 }
 
-/* ============ RESPONSIVE ============ */
+/* ================= RESPONSIVE ================= */
 @media (max-width: 768px) {
+  .dashboard-main {
+    margin-left: 0;   /* full-width main content on mobile */
+  }
+
   .cards-container {
     flex-direction: column;
   }
