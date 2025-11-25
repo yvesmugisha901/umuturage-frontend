@@ -5,6 +5,7 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-container">
+
         {/* Quick Links */}
         <div className="footer-links">
           <h4>Quick Links</h4>
@@ -20,13 +21,13 @@ const Footer = () => {
         <div className="footer-socials">
           <h4>Follow Us</h4>
           <div className="social-icons">
-            <a href="#"><img src="https://via.placeholder.com/40?text=FB" alt="Facebook" /></a><br />
-            <a href="#"><img src="https://via.placeholder.com/40?text=TW" alt="Twitter" /></a><br />
+            <a href="#"><img src="https://via.placeholder.com/40?text=FB" alt="Facebook" /></a>
+            <a href="#"><img src="https://via.placeholder.com/40?text=TW" alt="Twitter" /></a>
             <a href="#"><img src="https://via.placeholder.com/40?text=IG" alt="Instagram" /></a>
           </div>
         </div>
 
-        {/* Language selector */}
+        {/* Language Selector */}
         <div className="footer-language">
           <h4>Language</h4>
           <select className="language-selector">
@@ -34,6 +35,7 @@ const Footer = () => {
             <option value="rw">Kinyarwanda</option>
           </select>
         </div>
+
       </div>
 
       <div className="footer-bottom">

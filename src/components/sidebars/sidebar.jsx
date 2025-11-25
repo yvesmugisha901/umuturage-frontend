@@ -14,6 +14,10 @@ import {
 } from "react-icons/fa";
 
 const Sidebar = ({ level }) => {
+  // Map universal pages to role-specific paths
+  const settingsPath = `/dashboard/${level}/settings`;
+  const calendarPath = `/dashboard/${level}/calendar`;
+
   return (
     <aside className="sidebar">
 
@@ -33,10 +37,19 @@ const Sidebar = ({ level }) => {
                 <FaUsers className="icon" /> Add Household
               </Link>
             </li>
-
             <li>
               <Link to="/dashboard/isibo/households">
                 <FaHome className="icon" /> Households List
+              </Link>
+            </li>
+            <li>
+              <Link to="/dashboard/isibo/reports">
+                <FaClipboardList className="icon" /> Reports
+              </Link>
+            </li>
+            <li>
+              <Link to="/dashboard/isibo/notifications">
+                <FaBell className="icon" /> Notifications
               </Link>
             </li>
           </>
@@ -52,10 +65,19 @@ const Sidebar = ({ level }) => {
                 <FaUsers className="icon" /> Manage Isibos
               </Link>
             </li>
-
             <li>
               <Link to="/dashboard/cell/approvals">
                 <FaCheckCircle className="icon" /> Approve Isibo Data
+              </Link>
+            </li>
+            <li>
+              <Link to="/dashboard/cell/reports">
+                <FaClipboardList className="icon" /> Reports
+              </Link>
+            </li>
+            <li>
+              <Link to="/dashboard/cell/notifications">
+                <FaBell className="icon" /> Notifications
               </Link>
             </li>
           </>
@@ -71,10 +93,19 @@ const Sidebar = ({ level }) => {
                 <FaUsers className="icon" /> Manage Cells
               </Link>
             </li>
-
             <li>
               <Link to="/dashboard/sector/approvals">
                 <FaClipboardList className="icon" /> Approve Cell Data
+              </Link>
+            </li>
+            <li>
+              <Link to="/dashboard/sector/reports">
+                <FaClipboardList className="icon" /> Reports
+              </Link>
+            </li>
+            <li>
+              <Link to="/dashboard/sector/notifications">
+                <FaBell className="icon" /> Notifications
               </Link>
             </li>
           </>
@@ -90,66 +121,11 @@ const Sidebar = ({ level }) => {
                 <FaUsers className="icon" /> Manage Sectors
               </Link>
             </li>
-
             <li>
               <Link to="/dashboard/district/statistics">
                 <FaChartBar className="icon" /> District Statistics
               </Link>
             </li>
-          </>
-        )}
-
-        {/* ------------------------------- */}
-        {/*        USER-BASED FEATURES      */}
-        {/* ------------------------------- */}
-
-        {level === "isibo" && (
-          <>
-            <li>
-              <Link to="/dashboard/isibo/reports">
-                <FaClipboardList className="icon" /> Reports
-              </Link>
-            </li>
-            <li>
-              <Link to="/dashboard/isibo/notifications">
-                <FaBell className="icon" /> Notifications
-              </Link>
-            </li>
-          </>
-        )}
-
-        {level === "cell" && (
-          <>
-            <li>
-              <Link to="/dashboard/cell/reports">
-                <FaClipboardList className="icon" /> Reports
-              </Link>
-            </li>
-            <li>
-              <Link to="/dashboard/cell/notifications">
-                <FaBell className="icon" /> Notifications
-              </Link>
-            </li>
-          </>
-        )}
-
-        {level === "sector" && (
-          <>
-            <li>
-              <Link to="/dashboard/sector/reports">
-                <FaClipboardList className="icon" /> Reports
-              </Link>
-            </li>
-            <li>
-              <Link to="/dashboard/sector/notifications">
-                <FaBell className="icon" /> Notifications
-              </Link>
-            </li>
-          </>
-        )}
-
-        {level === "district" && (
-          <>
             <li>
               <Link to="/dashboard/district/reports">
                 <FaClipboardList className="icon" /> Reports
@@ -164,21 +140,23 @@ const Sidebar = ({ level }) => {
         )}
 
         {/* ------------------------------- */}
-        {/*     COMMON FOR ALL USERS       */}
+        {/*     ROLE-SPECIFIC SETTINGS      */}
         {/* ------------------------------- */}
-
         <li>
-          <Link to="/settings">
+          <Link to={settingsPath}>
             <FaCog className="icon" /> Settings
           </Link>
         </li>
 
         <li>
-          <Link to="/calendar">
+          <Link to={calendarPath}>
             <FaCalendarAlt className="icon" /> Calendar
           </Link>
         </li>
 
+        {/* ------------------------------- */}
+        {/*           LOGOUT                */}
+        {/* ------------------------------- */}
         <li className="logout">
           <Link to="/logout">
             <FaSignOutAlt className="icon" /> Logout
