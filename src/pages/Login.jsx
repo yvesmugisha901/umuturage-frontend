@@ -29,6 +29,9 @@ const Login = () => {
         case "isibo":
           navigate("/dashboard/isibo");
           break;
+        case "village":
+          navigate("/dashboard/village");
+          break;
         case "cell":
           navigate("/dashboard/cell");
           break;

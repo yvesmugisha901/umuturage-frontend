@@ -1,44 +1,51 @@
 import React from "react";
-import "../../styles/DashboardContent.css";
+import "../../styles/cellPages.css"; // Use the same common CSS
 
 const ManageIsibos = () => {
+  const isibos = [
+    { id: 1, name: "Isibo A1", leader: "Jean Bosco", households: 34 },
+    { id: 2, name: "Isibo B2", leader: "Alice Umuhoza", households: 21 },
+    { id: 3, name: "Isibo C3", leader: "John Mutoni", households: 17 },
+  ];
+
+  const handleView = (id) => alert(`Viewing details for Isibo id: ${id}`);
+
   return (
-    <div className="page-with-sidebar">
-      <div className="dashboard-main">
-        <main>
-          <div className="dashboard-header">
-            <h1>Manage Isibos</h1>
-            <p>View and manage all isibos under your cell.</p>
-          </div>
+    <div className="cell-page-container">
+      <header className="cell-page-header">
+        <h1>Manage Isibos</h1>
+        <p>View and manage all isibos under your cell.</p>
+      </header>
 
-          <div className="section">
-            <h2>Isibo List</h2>
-
-            <table className="data-table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Isibo Name</th>
-                  <th>Leader</th>
-                  <th>Households</th>
-                  <th>Action</th>
+      <section className="management-section">
+        <h2 className="section-title">Isibo List</h2>
+        <div className="table-wrapper">
+          <table className="management-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Isibo Name</th>
+                <th>Leader</th>
+                <th>Households</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {isibos.map((item, index) => (
+                <tr key={item.id}>
+                  <td>{index + 1}</td>
+                  <td>{item.name}</td>
+                  <td>{item.leader}</td>
+                  <td>{item.households}</td>
+                  <td>
+                    <button className="btn-view" onClick={() => handleView(item.id)}>View</button>
+                  </td>
                 </tr>
-              </thead>
-
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Isibo A1</td>
-                  <td>Jean Bosco</td>
-                  <td>34</td>
-                  <td><button className="btn-submit">View</button></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-        </main>
-      </div>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
     </div>
   );
 };

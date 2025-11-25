@@ -1,3 +1,4 @@
+// src/App.jsx
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -17,6 +18,7 @@ import DistrictDashboard from "./pages/dashboards/DistrictDashboard";
 import SectorDashboard from "./pages/dashboards/SectorDashboard";
 import CellDashboard from "./pages/dashboards/CellDashboard";
 import IsiboDashboard from "./pages/dashboards/IsiboDashboard";
+import VillageDashboard from "./pages/dashboards/VillageDashboard";
 
 // Isibo Pages
 import AddHousehold from "./pages/isibo/AddHousehold";
@@ -50,6 +52,13 @@ import DistrictCalendar from "./pages/district/Calendar";
 import ManageSectors from "./pages/district/ManageSectors";
 import DistrictStatistics from "./pages/district/DistrictStatistics";
 
+// Village Pages
+import VillageReports from "./pages/village/Reports";
+import VillageNotifications from "./pages/village/Notifications";
+import VillageCalendar from "./pages/village/Calendar";
+import ApproveVillageData from "./pages/village/ApproveData";
+import VillageSettings from "./pages/village/Settings";
+
 // Styles
 import "./styles/global.css";
 import "./styles/navbar.css";
@@ -61,13 +70,14 @@ import "./styles/districtDashboard.css";
 import "./styles/sectorDashboard.css";
 import "./styles/cellDashboard.css";
 import "./styles/isiboDashboard.css";
+import "./styles/villageDashboard.css";
+import "./styles/villagePages.css";
 
 function App() {
   return (
     <Router>
       <div className="app-container">
         <Routes>
-
           {/* PUBLIC PAGES */}
           <Route path="/" element={<><Navbar /><Home /><Footer /></>} />
           <Route path="/register" element={<><Navbar /><Register /><Footer /></>} />
@@ -82,6 +92,14 @@ function App() {
           <Route path="/dashboard/isibo/notifications" element={<div className="page-with-sidebar"><Sidebar level="isibo" /><div className="dashboard-main"><IsiboNotifications /><Footer /></div></div>} />
           <Route path="/dashboard/isibo/settings" element={<div className="page-with-sidebar"><Sidebar level="isibo" /><div className="dashboard-main"><IsiboSettings /><Footer /></div></div>} />
           <Route path="/dashboard/isibo/calendar" element={<div className="page-with-sidebar"><Sidebar level="isibo" /><div className="dashboard-main"><IsiboCalendar /><Footer /></div></div>} />
+
+          {/* =================== VILLAGE DASHBOARD =================== */}
+          <Route path="/dashboard/village" element={<div className="page-with-sidebar"><Sidebar level="village" /><div className="dashboard-main"><VillageDashboard /><Footer /></div></div>} />
+          <Route path="/dashboard/village/reports" element={<div className="page-with-sidebar"><Sidebar level="village" /><div className="dashboard-main"><VillageReports /><Footer /></div></div>} />
+          <Route path="/dashboard/village/notifications" element={<div className="page-with-sidebar"><Sidebar level="village" /><div className="dashboard-main"><VillageNotifications /><Footer /></div></div>} />
+          <Route path="/dashboard/village/calendar" element={<div className="page-with-sidebar"><Sidebar level="village" /><div className="dashboard-main"><VillageCalendar /><Footer /></div></div>} />
+          <Route path="/dashboard/village/approvals" element={<div className="page-with-sidebar"><Sidebar level="village" /><div className="dashboard-main"><ApproveVillageData /><Footer /></div></div>} />
+          <Route path="/dashboard/village/settings" element={<div className="page-with-sidebar"><Sidebar level="village" /><div className="dashboard-main"><VillageSettings /><Footer /></div></div>} />
 
           {/* =================== CELL DASHBOARD =================== */}
           <Route path="/dashboard/cell" element={<div className="page-with-sidebar"><Sidebar level="cell" /><div className="dashboard-main"><CellDashboard /><Footer /></div></div>} />

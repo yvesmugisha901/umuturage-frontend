@@ -1,74 +1,539 @@
 /* isiboPages.css */
 
-/* Main wrapper for pages with sidebar */
-.page-with-sidebar {
-  display: flex;
-  min-height: 100vh;
-  background-color: #f8f9fa; /* optional: background for content area */
-}
-
-/* Main content area next to sidebar */
-.dashboard-main {
-  margin-left: 250px; /* same as sidebar width */
+/* General Container */
+.isibo-page-container {
   padding: 20px;
-  flex: 1;
-  background-color: #fff;
-  box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+  margin-left: 250px; /* space for sidebar */
+  background-color: #f9f9f9;
   min-height: 100vh;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
 }
 
-/* Add consistent heading style for all isibo pages */
-.dashboard-main h1, 
-.dashboard-main h2, 
-.dashboard-main h3 {
+/* Page Title */
+.isibo-title {
+  font-size: 28px;
+  font-weight: 600;
   margin-bottom: 20px;
-  color: #1c3c62;
+  color: #1c1e21;
 }
 
-/* Tables inside dashboards */
-.dashboard-main table {
+/* Cards */
+.isibo-card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.isibo-card h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #111;
+}
+
+.isibo-card p {
+  font-size: 14px;
+  color: #555;
+}
+
+.chart-placeholder {
+  height: 200px;
+  background-color: #f0f2f5;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-size: 14px;
+}
+
+/* Actions / Buttons */
+.isibo-actions {
+  margin-bottom: 20px;
+}
+
+.download-btn {
+  background-color: #1877f2;
+  color: #fff;
+  padding: 8px 14px;
+  margin-right: 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: 0.2s ease;
+}
+
+.download-btn:hover {
+  background-color: #165ecc;
+}
+
+/* Tables */
+.data-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 15px;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.dashboard-main table th, 
-.dashboard-main table td {
-  border: 1px solid #ddd;
-  padding: 10px;
+.data-table th, .data-table td {
   text-align: left;
+  padding: 12px 15px;
 }
 
-.dashboard-main table th {
-  background-color: #f0f0f1;
-  color: #1c3c62;
+.data-table th {
+  background-color: #f0f2f5;
+  font-weight: 600;
+  color: #111;
+}
+
+.data-table tbody tr {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.data-table tbody tr:hover {
+  background-color: #f5f6f7;
+}
+
+.btn-submit {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #42b72a;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btn-submit:hover {
+  background-color: #36a420;
+}
+
+/* Notification List */
+.notification-item {
+  background-color: #fff;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-left: 4px solid #1877f2;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+  font-size: 14px;
+}
+
+.notification-item:hover {
+  background-color: #f0f2f5;
+}
+
+/* Calendar */
+.isibo-calendar {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+.isibo-calendar table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.isibo-calendar th, .isibo-calendar td {
+  border: 1px solid #e0e0e0;
+  padding: 10px;
+  text-align: center;
+}
+
+.isibo-calendar th {
+  background-color: #f0f2f5;
   font-weight: 600;
 }
 
-/* Buttons */
-.dashboard-main button {
-  padding: 8px 14px;
-  background-color: #1c3c62;
+.isibo-calendar td {
+  height: 60px;
+  vertical-align: top;
+}
+
+.isibo-calendar td.today {
+  background-color: #d8eaff;
+  font-weight: 600;
+}
+/* Calendar container */
+.isibo-card .react-calendar {
+  width: 100%;
+  max-width: 600px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-top: 16px;
+}
+
+/* Highlighted dates */
+.react-calendar .highlighted-date {
+  background-color: #4a90e2 !important;
+  color: white !important;
+  border-radius: 50%;
+}
+
+/* Selected date below calendar */
+.selected-date {
+  margin-top: 12px;
+  font-weight: bold;
+}
+.calendar-container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-top: 20px;
+}
+
+.calendar-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.calendar-nav button {
+  padding: 6px 12px;
+  border: none;
+  background: #4a90e2;
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.calendar-nav button:hover {
+  background: #357ab8;
+}
+
+.calendar-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.calendar-weekday {
+  text-align: center;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.calendar-day {
+  text-align: center;
+  padding: 12px 0;
+  background: #f5f6fa;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.calendar-day:hover {
+  background: #4a90e2;
+  color: white;
+}
+
+.empty-day {
+  background: transparent;
+  cursor: default;
+}
+.notifications-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.notification-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 15px 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.notification-card:hover {
+  background: #f0f4ff;
+}
+
+.notification-card.unread {
+  border-left: 4px solid #4a90e2;
+}
+
+.notification-card.read {
+  opacity: 0.7;
+}
+
+.notification-message {
+  font-size: 16px;
+  color: #333;
+}
+
+.notification-date {
+  font-size: 14px;
+  color: #888;
+}
+.notifications-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.btn-mark-read {
+  background: #4a90e2;
   color: #fff;
   border: none;
-  border-radius: 5px;
+  padding: 8px 16px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: 0.25s ease;
+  font-weight: 500;
+  transition: 0.2s;
 }
 
-.dashboard-main button:hover {
-  background-color: #163154;
+.btn-mark-read:hover {
+  background: #3578c1;
+}
+.isibo-page-container {
+  padding: 20px;
+  background-color: #f9f9f9;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .sidebar {
-    position: relative;
-    width: 100%;
-    height: auto;
-  }
+.isibo-header {
+  margin-bottom: 20px;
+}
 
-  .dashboard-main {
+.isibo-title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.isibo-actions {
+  margin-bottom: 20px;
+}
+
+.download-btn {
+  background: #4a90e2;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  margin-right: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.download-btn:hover {
+  background: #3578c1;
+}
+
+.cards-container {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+  flex: 1 1 200px;
+}
+
+.section {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+}
+
+.chart-placeholder {
+  height: 200px;
+  border: 2px dashed #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  margin-top: 10px;
+}
+.isibo-page-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.isibo-header {
+  margin-bottom: 20px;
+}
+
+.isibo-title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.isibo-actions {
+  margin-bottom: 20px;
+}
+
+.download-btn {
+  background: #4a90e2;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  margin-right: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.download-btn:hover {
+  background: #3578c1;
+}
+
+.cards-container {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+  flex: 1 1 200px;
+}
+
+.section {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+}
+
+.chart-container {
+  margin-top: 15px;
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+}
+.isibo-page-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.isibo-header {
+  margin-bottom: 20px;
+}
+
+.isibo-title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.isibo-actions {
+  margin-bottom: 15px;
+}
+
+.download-btn {
+  background: #4a90e2;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+.download-btn:hover {
+  background: #3578c1;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+}
+
+.data-table th, .data-table td {
+  padding: 12px 15px;
+  text-align: left;
+}
+
+.data-table th {
+  background-color: #f0f0f0;
+  font-weight: 600;
+}
+
+.data-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.btn-edit, .btn-delete {
+  border: none;
+  padding: 6px 10px;
+  margin-right: 5px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-edit {
+  background-color: #4a90e2;
+}
+
+.btn-edit:hover {
+  background-color: #3578c1;
+}
+
+.btn-delete {
+  background-color: #e24a4a;
+}
+
+.btn-delete:hover {
+  background-color: #c13535;
+}
+
+
+/* Responsive */
+@media screen and (max-width: 1024px) {
+  .isibo-page-container {
     margin-left: 0;
     padding: 15px;
   }

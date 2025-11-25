@@ -1,0 +1,251 @@
+/* Common container for all cell pages */
+.cell-page-container {
+  padding: 20px;
+  margin-left: 250px; /* to avoid sidebar collision */
+  min-height: 100vh;
+  background-color: #f9f9f9;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Page title */
+.cell-title {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #1c3c62;
+}
+
+/* Card style for sections like reports, approvals, overview */
+.cell-card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.cell-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+/* Chart placeholders */
+.chart-placeholder {
+  height: 200px;
+  border: 2px dashed #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-style: italic;
+  margin-top: 15px;
+  border-radius: 6px;
+}
+
+/* Action buttons */
+.cell-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.download-btn {
+  background-color: #1c3c62;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s;
+}
+
+.download-btn:hover {
+  background-color: #345a8e;
+}
+
+/* Notifications list */
+.notifications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.notification-item {
+  background-color: #fff;
+  border-left: 5px solid #1c3c62;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s;
+}
+
+.notification-item:hover {
+  transform: translateX(3px);
+}
+
+/* Calendar grid for consistency */
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.calendar-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-weight: bold;
+  background-color: #f0f0f1;
+  padding: 10px 0;
+  border-radius: 5px;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.calendar-day {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  transition: transform 0.2s;
+}
+
+.calendar-day:hover {
+  background-color: #e0f0ff;
+  transform: scale(1.05);
+}
+.cell-page-container {
+  padding: 20px 30px;
+  background: #f9f9f9;
+  min-height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.cell-page-header h1 {
+  font-size: 28px;
+  margin-bottom: 5px;
+  color: #222;
+}
+
+.cell-page-header p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.approval-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.approval-table th, .approval-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.approval-table th {
+  background-color: #f1f1f1;
+  font-weight: 600;
+}
+
+.approval-table tr:hover {
+  background-color: #f5f5f5;
+}
+
+.status-badge {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  display: inline-block;
+  text-align: center;
+}
+
+.status-badge.pending { background-color: #f0ad4e; }
+.status-badge.approved { background-color: #5cb85c; }
+.status-badge.rejected { background-color: #d9534f; }
+
+.actions-cell button {
+  margin-right: 5px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-approve { background-color: #5cb85c; color: #fff; }
+.btn-approve:hover { background-color: #4cae4c; }
+
+.btn-reject { background-color: #d9534f; color: #fff; }
+.btn-reject:hover { background-color: #c9302c; }
+.management-section {
+  margin-top: 20px;
+}
+
+.management-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.management-table th, .management-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.management-table th {
+  background-color: #f1f1f1;
+  font-weight: 600;
+}
+
+.management-table tr:hover {
+  background-color: #f5f5f5;
+}
+
+.btn-view {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  background-color: #5bc0de;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-view:hover {
+  background-color: #31b0d5;
+}

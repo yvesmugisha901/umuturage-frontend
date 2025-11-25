@@ -1,20 +1,34 @@
 // src/pages/dashboards/isibo/AddHousehold.jsx
 import React from "react";
-import "../../styles/isiboDashboard.css";
+import "../../styles/isiboPages.css";
 
 const AddHousehold = () => {
   return (
-    <div className="section">
-      <h2>Add Household</h2>
-      <p>This is the Add Household page for Isibo.</p>
+    <div className="isibo-page-container">
+      <h1 className="isibo-title">Add Household</h1>
 
-      {/* Example form */}
-      <form className="form">
-        <input type="text" placeholder="Household Name" />
-        <input type="text" placeholder="Head of Household" />
-        <input type="text" placeholder="Number of Members" />
-        <button type="submit" className="btn-submit">Add Household</button>
-      </form>
+      <div className="isibo-card">
+        <p>Use the form below to add a new household under this Isibo.</p>
+
+        <form className="form">
+          <label className="field">
+            <span>Household Name</span>
+            <input type="text" placeholder="Enter household name" />
+          </label>
+
+          <label className="field">
+            <span>Head of Household</span>
+            <input type="text" placeholder="Enter head of household" />
+          </label>
+
+          <label className="field">
+            <span>Number of Members</span>
+            <input type="number" placeholder="Enter number of members" />
+          </label>
+
+          <button type="submit" className="btn-submit">Add Household</button>
+        </form>
+      </div>
     </div>
   );
 };
