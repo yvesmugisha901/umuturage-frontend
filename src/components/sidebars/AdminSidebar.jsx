@@ -19,31 +19,31 @@ const AdminSidebar = () => {
       <ul className="sidebar-menu">
 
         <li>
-          <Link to="/dashboard/admin">
+          <Link to="/admin">
             <FaHome className="icon" /> Dashboard
           </Link>
         </li>
 
         <li>
-          <Link to="/dashboard/admin/manage-users">
+          <Link to="/admin/manage-users">
             <FaUsers className="icon" /> Manage Users
           </Link>
         </li>
 
         <li>
-          <Link to="/dashboard/admin/manage-district">
+          <Link to="/admin/manage-district">
             <FaUsers className="icon" /> Manage District
           </Link>
         </li>
 
         <li>
-          <Link to="/dashboard/admin/settings">
+          <Link to="/admin/settings">
             <FaCog className="icon" /> System Settings
           </Link>
         </li>
 
         <li>
-          <Link to="/dashboard/admin/calendar">
+          <Link to="/admin/calendar">
             <FaCalendarAlt className="icon" /> Calendar
           </Link>
         </li>
