@@ -102,18 +102,41 @@ function App() {
           <Route path="/logout" element={<Logout />} />
 
           {/* =================== ADMIN ROUTES =================== */}
-          <Route path="/admin" element={<AdminLayout><AdminDashboard /></AdminLayout>} />
-          <Route path="/admin/users" element={<AdminLayout><ManageUsers /></AdminLayout>} />
-          <Route path="/admin/isibos" element={<AdminLayout><ManageIsibo /></AdminLayout>} />
-          <Route path="/admin/villages" element={<AdminLayout><ManageVillage /></AdminLayout>} />
-          <Route path="/admin/cells" element={<AdminLayout><ManageCell /></AdminLayout>} />
-          <Route path="/admin/sectors" element={<AdminLayout><ManageSector /></AdminLayout>} />
-          <Route path="/admin/districts" element={<AdminLayout><ManageDistrict /></AdminLayout>} />
-          <Route path="/admin/approvals" element={<AdminLayout><AdminApprovals /></AdminLayout>} />
-          <Route path="/admin/audit-logs" element={<AdminLayout><AdminAuditLogs /></AdminLayout>} />
-          <Route path="/admin/calendar" element={<AdminLayout><AdminCalendar /></AdminLayout>} />
-          <Route path="/admin/system-settings" element={<AdminLayout><AdminSystemSettings /></AdminLayout>} />
-          <Route path="/admin/reports" element={<AdminLayout><AdminReports /></AdminLayout>} />
+<Route path="/admin" element={<AdminLayout><AdminDashboard /></AdminLayout>} />
+
+<Route path="/admin/manage-users" 
+  element={<AdminLayout><ManageUsers /></AdminLayout>} />
+
+<Route path="/admin/manage-district" 
+  element={<AdminLayout><ManageDistrict /></AdminLayout>} />
+
+<Route path="/admin/manage-isibos" 
+  element={<AdminLayout><ManageIsibo /></AdminLayout>} />
+
+<Route path="/admin/manage-villages" 
+  element={<AdminLayout><ManageVillage /></AdminLayout>} />
+
+<Route path="/admin/manage-cells" 
+  element={<AdminLayout><ManageCell /></AdminLayout>} />
+
+<Route path="/admin/manage-sectors" 
+  element={<AdminLayout><ManageSector /></AdminLayout>} />
+
+<Route path="/admin/approvals" 
+  element={<AdminLayout><AdminApprovals /></AdminLayout>} />
+
+<Route path="/admin/audit-logs" 
+  element={<AdminLayout><AdminAuditLogs /></AdminLayout>} />
+
+<Route path="/admin/calendar" 
+  element={<AdminLayout><AdminCalendar /></AdminLayout>} />
+
+<Route path="/admin/settings" 
+  element={<AdminLayout><AdminSystemSettings /></AdminLayout>} />
+
+<Route path="/admin/reports" 
+  element={<AdminLayout><AdminReports /></AdminLayout>} />
+
 
           {/* =================== ISIBO ROUTES =================== */}
           <Route path="/dashboard/isibo" element={<DashboardLayout level="isibo"><IsiboDashboard /></DashboardLayout>} />
