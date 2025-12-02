@@ -3,14 +3,16 @@ import Sidebar from "../../components/sidebars/Sidebar";
 import "../../styles/cellDashboard.css";
 
 const CellDashboard = () => {
-  const [isibos] = useState([
-    { id: 1, name: "Isibo A12", leader: "Mukamana Claire", households: 48, approvedReports: 132 },
-    { id: 2, name: "Isibo B04", leader: "Twizerimana Eric", households: 36, approvedReports: 97 },
+  // Villages under this Cell
+  const [villages] = useState([
+    { id: 1, name: "Village Gasharu", leader: "Uwimana Alice", households: 120, approvedReports: 340 },
+    { id: 2, name: "Village Kinyana", leader: "Nkurunziza Paul", households: 98, approvedReports: 276 },
   ]);
 
+  // Pending info submitted by villages
   const [pendingApprovals, setPendingApprovals] = useState([
-    { id: 1, isibo: "Isibo A12", submittedBy: "Mukamana Claire", household: "HH-0093", date: "2025-11-10" },
-    { id: 2, isibo: "Isibo B04", submittedBy: "Twizerimana Eric", household: "HH-0198", date: "2025-11-09" },
+    { id: 1, village: "Village Gasharu", submittedBy: "Uwimana Alice", household: "HH-0231", date: "2025-11-10" },
+    { id: 2, village: "Village Kinyana", submittedBy: "Nkurunziza Paul", household: "HH-0314", date: "2025-11-09" },
   ]);
 
   const approvePending = (id) => {
@@ -20,31 +22,30 @@ const CellDashboard = () => {
 
   const rejectPending = (id) => {
     setPendingApprovals(pendingApprovals.filter(p => p.id !== id));
-    alert("Rejected submission.");
+    alert("Submission rejected.");
   };
 
   return (
     <div className="dashboard-wrapper">
-      {/* Sidebar */}
       <Sidebar level="cell" />
 
-      {/* Main content */}
       <main className="dashboard-content">
+
         {/* Header */}
         <header className="dashboard-header">
           <h1>Cell Dashboard</h1>
-          <p>Overview of Isibos, approvals, and reports</p>
+          <p>Overview of villages, approvals, and reports</p>
         </header>
 
         {/* Stats Cards */}
         <section className="cards-container">
           <div className="card blue">
-            <h3>Total Isibos</h3>
-            <p>{isibos.length}</p>
+            <h3>Total Villages</h3>
+            <p>{villages.length}</p>
           </div>
           <div className="card green">
             <h3>Total Households</h3>
-            <p>{isibos.reduce((sum, i) => sum + i.households, 0)}</p>
+            <p>{villages.reduce((sum, v) => sum + v.households, 0)}</p>
           </div>
           <div className="card orange">
             <h3>Pending Approvals</h3>
@@ -58,24 +59,26 @@ const CellDashboard = () => {
 
         {/* Pending Approvals */}
         <section className="section">
-          <h2>Pending Information From Isibos</h2>
+          <h2>Pending Information From Villages</h2>
+
           {pendingApprovals.length === 0 ? (
             <p className="empty">No pending submissions</p>
           ) : (
             <table className="data-table">
               <thead>
                 <tr>
-                  <th>Isibo</th>
+                  <th>Village</th>
                   <th>Submitted By</th>
                   <th>Household</th>
                   <th>Date Submitted</th>
                   <th>Action</th>
                 </tr>
               </thead>
+
               <tbody>
                 {pendingApprovals.map(p => (
                   <tr key={p.id}>
-                    <td>{p.isibo}</td>
+                    <td>{p.village}</td>
                     <td>{p.submittedBy}</td>
                     <td>{p.household}</td>
                     <td>{p.date}</td>
@@ -86,29 +89,32 @@ const CellDashboard = () => {
                   </tr>
                 ))}
               </tbody>
+
             </table>
           )}
         </section>
 
-        {/* Managed Isibos */}
+        {/* Managed Villages */}
         <section className="section">
-          <h2>Isibos Under This Cell</h2>
+          <h2>Villages Under This Cell</h2>
+
           <table className="data-table">
             <thead>
               <tr>
-                <th>Isibo Name</th>
+                <th>Village Name</th>
                 <th>Leader</th>
                 <th>Total Households</th>
                 <th>Approved Reports</th>
               </tr>
             </thead>
+
             <tbody>
-              {isibos.map(i => (
-                <tr key={i.id}>
-                  <td>{i.name}</td>
-                  <td>{i.leader}</td>
-                  <td>{i.households}</td>
-                  <td>{i.approvedReports}</td>
+              {villages.map(v => (
+                <tr key={v.id}>
+                  <td>{v.name}</td>
+                  <td>{v.leader}</td>
+                  <td>{v.households}</td>
+                  <td>{v.approvedReports}</td>
                 </tr>
               ))}
             </tbody>
@@ -119,9 +125,10 @@ const CellDashboard = () => {
         <section className="section">
           <h2>Reports & Analytics</h2>
           <div className="report-box">
-            <p>📊 Coming Soon: Weekly statistics, population trends, and reports sent to Sector.</p>
+            <p>📊 Coming Soon: Weekly statistics, village population trends, and sector reports.</p>
           </div>
         </section>
+
       </main>
     </div>
   );

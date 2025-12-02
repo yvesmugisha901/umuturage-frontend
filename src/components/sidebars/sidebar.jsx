@@ -14,23 +14,18 @@ import {
 } from "react-icons/fa";
 
 const Sidebar = ({ level }) => {
-  // Map universal pages to role-specific paths
+  // Universal paths
   const settingsPath = `/dashboard/${level}/settings`;
   const calendarPath = `/dashboard/${level}/calendar`;
 
   return (
     <aside className="sidebar">
-
       <div className="sidebar-header">
         <h2>{level.toUpperCase()} Dashboard</h2>
       </div>
 
       <ul className="sidebar-menu">
-        
-
-        {/* ------------------------------- */}
-        {/*            ISIBO MENU           */}
-        {/* ------------------------------- */}
+        {/* ISIBO */}
         {level === "isibo" && (
           <>
             <li>
@@ -56,7 +51,7 @@ const Sidebar = ({ level }) => {
           </>
         )}
 
-
+        {/* VILLAGE */}
         {level === "village" && (
           <>
             <li>
@@ -82,24 +77,22 @@ const Sidebar = ({ level }) => {
           </>
         )}
 
-        {/* ------------------------------- */}
-        {/*            CELL MENU            */}
-        {/* ------------------------------- */}
+        {/* CELL */}
         {level === "cell" && (
           <>
             <li>
-              <Link to="/dashboard/cell/isibos">
-                <FaUsers className="icon" /> Manage Isibos
+              <Link to="/dashboard/cell/approvals">
+                <FaCheckCircle className="icon" /> Approve Village Data
               </Link>
             </li>
             <li>
-              <Link to="/dashboard/cell/approvals">
-                <FaCheckCircle className="icon" /> Approve Isibo Data
+              <Link to="/dashboard/cell/managevillages">
+                <FaUsers className="icon" /> Manage Villages
               </Link>
             </li>
             <li>
               <Link to="/dashboard/cell/reports">
-                <FaClipboardList className="icon" /> Reports
+                <FaClipboardList className="icon" /> Cell Reports
               </Link>
             </li>
             <li>
@@ -110,9 +103,7 @@ const Sidebar = ({ level }) => {
           </>
         )}
 
-        {/* ------------------------------- */}
-        {/*           SECTOR MENU           */}
-        {/* ------------------------------- */}
+        {/* SECTOR */}
         {level === "sector" && (
           <>
             <li>
@@ -138,9 +129,7 @@ const Sidebar = ({ level }) => {
           </>
         )}
 
-        {/* ------------------------------- */}
-        {/*          DISTRICT MENU          */}
-        {/* ------------------------------- */}
+        {/* DISTRICT */}
         {level === "district" && (
           <>
             <li>
@@ -166,30 +155,24 @@ const Sidebar = ({ level }) => {
           </>
         )}
 
-        {/* ------------------------------- */}
-        {/*     ROLE-SPECIFIC SETTINGS      */}
-        {/* ------------------------------- */}
+        {/* UNIVERSAL SETTINGS & CALENDAR */}
         <li>
           <Link to={settingsPath}>
             <FaCog className="icon" /> Settings
           </Link>
         </li>
-
         <li>
           <Link to={calendarPath}>
             <FaCalendarAlt className="icon" /> Calendar
           </Link>
         </li>
 
-        {/* ------------------------------- */}
-        {/*           LOGOUT                */}
-        {/* ------------------------------- */}
+        {/* LOGOUT */}
         <li className="logout">
           <Link to="/logout">
             <FaSignOutAlt className="icon" /> Logout
           </Link>
         </li>
-
       </ul>
     </aside>
   );

@@ -1,8 +1,9 @@
+// Login.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/login.css";
-import Footer from "../components/Footer"; // ✅ include the Footer
+import Footer from "../components/Footer";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -15,43 +16,47 @@ const Login = () => {
     setError("");
 
     try {
-      const response = await axios.post("http://localhost:5000/api/login", {
+      const response = await axios.post("http://localhost:5000/api/users/login", {
         email,
         password,
       });
 
-      const user = response.data;
+      const { token, user } = response.data;
 
-      localStorage.setItem("token", user.token);
-      localStorage.setItem("role", user.role);
+      // Save token and role in localStorage
+      localStorage.setItem("token", token);
+      localStorage.setItem("role", user.role); // if you use role names in DB
+      localStorage.setItem("username", user.username);
 
+      // Redirect based on role
       switch (user.role) {
-        case "isibo":
+        case "isibo_leader":
           navigate("/dashboard/isibo");
           break;
-        case "village":
+        case "village_leader":
           navigate("/dashboard/village");
           break;
-        case "cell":
+        case "cell_leader":
           navigate("/dashboard/cell");
           break;
-        case "sector":
+        case "sector_leader":
           navigate("/dashboard/sector");
           break;
-        case "district":
+        case "district_leader":
           navigate("/dashboard/district");
           break;
         default:
           navigate("/dashboard");
       }
+
     } catch (err) {
       console.error(err);
-      setError("Invalid email or password");
+      setError(err.response?.data?.message || "Invalid email or password");
     }
   };
 
   return (
-    <div className="page-wrapper"> {/* wrap everything for flex layout */}
+    <div className="page-wrapper">
       <div className="login-page">
         <form className="login-form" onSubmit={handleSubmit}>
           <h2>Login</h2>
@@ -73,7 +78,7 @@ const Login = () => {
           <button type="submit">Login</button>
         </form>
       </div>
-     
+      <Footer />
     </div>
   );
 };

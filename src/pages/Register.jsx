@@ -1,4 +1,3 @@
-// Register.js
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/register.css";
@@ -11,11 +10,19 @@ const Register = () => {
     phone: "",
     password: "",
     confirmPassword: "",
+    role: "isibo_leader",
   });
 
   const [message, setMessage] = useState("");
 
-  // Handle input changes
+  const roles = [
+    { label: "Isibo Leader", value: "isibo_leader" },
+    { label: "Village Leader", value: "village_leader" },
+    { label: "Cell Leader", value: "cell_leader" },
+    { label: "Sector Leader", value: "sector_leader" },
+    { label: "District Leader", value: "district_leader" },
+  ];
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -23,7 +30,6 @@ const Register = () => {
     });
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -33,15 +39,23 @@ const Register = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/register", {
+      const payload = {
+        username: `${formData.firstname} ${formData.lastname}`,
+        email: formData.email,
+        password: formData.password,
+        role: formData.role,
+        phone: formData.phone,
+      };
+
+      const response = await fetch("http://localhost:5000/api/users/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       const data = await response.json();
 
-      if (response.ok) {
+      if (response.status === 201) {
         setMessage("Registration successful! You can now log in.");
         setFormData({
           firstname: "",
@@ -50,14 +64,18 @@ const Register = () => {
           phone: "",
           password: "",
           confirmPassword: "",
+          role: "isibo_leader",
         });
       } else {
         setMessage(data.message || "Registration failed.");
       }
     } catch (error) {
+      console.error(error);
       setMessage("Server error. Please try again later.");
     }
   };
+
+  const inputStyle = { fontSize: "1rem" }; // Bigger placeholder text
 
   return (
     <div className="register-container">
@@ -73,6 +91,7 @@ const Register = () => {
               value={formData.firstname}
               onChange={handleChange}
               required
+              style={inputStyle}
             />
             <input
               type="text"
@@ -81,6 +100,7 @@ const Register = () => {
               value={formData.lastname}
               onChange={handleChange}
               required
+              style={inputStyle}
             />
           </div>
 
@@ -91,6 +111,7 @@ const Register = () => {
             value={formData.email}
             onChange={handleChange}
             required
+            style={inputStyle}
           />
 
           <input
@@ -100,6 +121,7 @@ const Register = () => {
             value={formData.phone}
             onChange={handleChange}
             required
+            style={inputStyle}
           />
 
           <input
@@ -109,6 +131,7 @@ const Register = () => {
             value={formData.password}
             onChange={handleChange}
             required
+            style={inputStyle}
           />
 
           <input
@@ -118,7 +141,22 @@ const Register = () => {
             value={formData.confirmPassword}
             onChange={handleChange}
             required
+            style={inputStyle}
           />
+
+          <select
+            name="role"
+            value={formData.role}
+            onChange={handleChange}
+            required
+            style={inputStyle}
+          >
+            {roles.map((r) => (
+              <option key={r.value} value={r.value}>
+                {r.label}
+              </option>
+            ))}
+          </select>
 
           <button type="submit" className="register-btn">
             Register

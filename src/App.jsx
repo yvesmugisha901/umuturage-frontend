@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // Layouts
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import Sidebar from "./components/sidebars/Sidebar";
 import AdminLayout from "./layouts/AdminLayout";
 
 // Public pages
@@ -51,8 +50,8 @@ import ApproveVillageData from "./pages/village/ApproveData";
 import VillageSettings from "./pages/village/Settings";
 
 // Cell Pages
-import ManageIsibos from "./pages/cell/ManageIsibos";
-import ApproveIsiboData from "./pages/cell/ApproveIsiboData";
+import ManageVillages from "./pages/cell/ManageVillages";
+import ApproveVillageDataCell from "./pages/cell/ApproveVillageData";
 import CellReports from "./pages/cell/CellReports";
 import CellNotifications from "./pages/cell/CellNotifications";
 import CellSettings from "./pages/cell/Settings";
@@ -80,6 +79,8 @@ import "./styles/global.css";
 // =============================
 // REUSABLE DASHBOARD WRAPPER
 // =============================
+import Sidebar from "./components/sidebars/Sidebar";
+
 const DashboardLayout = ({ level, children }) => (
   <div className="page-with-sidebar">
     <Sidebar level={level} />
@@ -102,41 +103,18 @@ function App() {
           <Route path="/logout" element={<Logout />} />
 
           {/* =================== ADMIN ROUTES =================== */}
-<Route path="/admin" element={<AdminLayout><AdminDashboard /></AdminLayout>} />
-
-<Route path="/admin/manage-users" 
-  element={<AdminLayout><ManageUsers /></AdminLayout>} />
-
-<Route path="/admin/manage-district" 
-  element={<AdminLayout><ManageDistrict /></AdminLayout>} />
-
-<Route path="/admin/manage-isibos" 
-  element={<AdminLayout><ManageIsibo /></AdminLayout>} />
-
-<Route path="/admin/manage-villages" 
-  element={<AdminLayout><ManageVillage /></AdminLayout>} />
-
-<Route path="/admin/manage-cells" 
-  element={<AdminLayout><ManageCell /></AdminLayout>} />
-
-<Route path="/admin/manage-sectors" 
-  element={<AdminLayout><ManageSector /></AdminLayout>} />
-
-<Route path="/admin/approvals" 
-  element={<AdminLayout><AdminApprovals /></AdminLayout>} />
-
-<Route path="/admin/audit-logs" 
-  element={<AdminLayout><AdminAuditLogs /></AdminLayout>} />
-
-<Route path="/admin/calendar" 
-  element={<AdminLayout><AdminCalendar /></AdminLayout>} />
-
-<Route path="/admin/settings" 
-  element={<AdminLayout><AdminSystemSettings /></AdminLayout>} />
-
-<Route path="/admin/reports" 
-  element={<AdminLayout><AdminReports /></AdminLayout>} />
-
+          <Route path="/admin" element={<AdminLayout><AdminDashboard /></AdminLayout>} />
+          <Route path="/admin/manage-users" element={<AdminLayout><ManageUsers /></AdminLayout>} />
+          <Route path="/admin/manage-district" element={<AdminLayout><ManageDistrict /></AdminLayout>} />
+          <Route path="/admin/manage-isibos" element={<AdminLayout><ManageIsibo /></AdminLayout>} />
+          <Route path="/admin/manage-villages" element={<AdminLayout><ManageVillage /></AdminLayout>} />
+          <Route path="/admin/manage-cells" element={<AdminLayout><ManageCell /></AdminLayout>} />
+          <Route path="/admin/manage-sectors" element={<AdminLayout><ManageSector /></AdminLayout>} />
+          <Route path="/admin/approvals" element={<AdminLayout><AdminApprovals /></AdminLayout>} />
+          <Route path="/admin/audit-logs" element={<AdminLayout><AdminAuditLogs /></AdminLayout>} />
+          <Route path="/admin/calendar" element={<AdminLayout><AdminCalendar /></AdminLayout>} />
+          <Route path="/admin/settings" element={<AdminLayout><AdminSystemSettings /></AdminLayout>} />
+          <Route path="/admin/reports" element={<AdminLayout><AdminReports /></AdminLayout>} />
 
           {/* =================== ISIBO ROUTES =================== */}
           <Route path="/dashboard/isibo" element={<DashboardLayout level="isibo"><IsiboDashboard /></DashboardLayout>} />
@@ -149,16 +127,17 @@ function App() {
 
           {/* =================== VILLAGE ROUTES =================== */}
           <Route path="/dashboard/village" element={<DashboardLayout level="village"><VillageDashboard /></DashboardLayout>} />
+          <Route path="/dashboard/village/approvedata" element={<DashboardLayout level="village"><ApproveVillageData /></DashboardLayout>} />
+          <Route path="/dashboard/village/households" element={<DashboardLayout level="village"><HouseholdsList /></DashboardLayout>} />
           <Route path="/dashboard/village/reports" element={<DashboardLayout level="village"><VillageReports /></DashboardLayout>} />
           <Route path="/dashboard/village/notifications" element={<DashboardLayout level="village"><VillageNotifications /></DashboardLayout>} />
-          <Route path="/dashboard/village/calendar" element={<DashboardLayout level="village"><VillageCalendar /></DashboardLayout>} />
-          <Route path="/dashboard/village/approvals" element={<DashboardLayout level="village"><ApproveVillageData /></DashboardLayout>} />
           <Route path="/dashboard/village/settings" element={<DashboardLayout level="village"><VillageSettings /></DashboardLayout>} />
+          <Route path="/dashboard/village/calendar" element={<DashboardLayout level="village"><VillageCalendar /></DashboardLayout>} />
 
           {/* =================== CELL ROUTES =================== */}
           <Route path="/dashboard/cell" element={<DashboardLayout level="cell"><CellDashboard /></DashboardLayout>} />
-          <Route path="/dashboard/cell/isibos" element={<DashboardLayout level="cell"><ManageIsibos /></DashboardLayout>} />
-          <Route path="/dashboard/cell/approvals" element={<DashboardLayout level="cell"><ApproveIsiboData /></DashboardLayout>} />
+          <Route path="/dashboard/cell/approvals" element={<DashboardLayout level="cell"><ApproveVillageDataCell /></DashboardLayout>} />
+          <Route path="/dashboard/cell/managevillages" element={<DashboardLayout level="cell"><ManageVillages /></DashboardLayout>} />
           <Route path="/dashboard/cell/reports" element={<DashboardLayout level="cell"><CellReports /></DashboardLayout>} />
           <Route path="/dashboard/cell/notifications" element={<DashboardLayout level="cell"><CellNotifications /></DashboardLayout>} />
           <Route path="/dashboard/cell/settings" element={<DashboardLayout level="cell"><CellSettings /></DashboardLayout>} />
@@ -166,21 +145,21 @@ function App() {
 
           {/* =================== SECTOR ROUTES =================== */}
           <Route path="/dashboard/sector" element={<DashboardLayout level="sector"><SectorDashboard /></DashboardLayout>} />
+          <Route path="/dashboard/sector/cells" element={<DashboardLayout level="sector"><ManageCells /></DashboardLayout>} />
+          <Route path="/dashboard/sector/approvals" element={<DashboardLayout level="sector"><ApproveCellData /></DashboardLayout>} />
           <Route path="/dashboard/sector/reports" element={<DashboardLayout level="sector"><SectorReports /></DashboardLayout>} />
           <Route path="/dashboard/sector/notifications" element={<DashboardLayout level="sector"><SectorNotifications /></DashboardLayout>} />
           <Route path="/dashboard/sector/settings" element={<DashboardLayout level="sector"><SectorSettings /></DashboardLayout>} />
           <Route path="/dashboard/sector/calendar" element={<DashboardLayout level="sector"><SectorCalendar /></DashboardLayout>} />
-          <Route path="/dashboard/sector/cells" element={<DashboardLayout level="sector"><ManageCells /></DashboardLayout>} />
-          <Route path="/dashboard/sector/approvals" element={<DashboardLayout level="sector"><ApproveCellData /></DashboardLayout>} />
 
           {/* =================== DISTRICT ROUTES =================== */}
           <Route path="/dashboard/district" element={<DashboardLayout level="district"><DistrictDashboard /></DashboardLayout>} />
+          <Route path="/dashboard/district/sectors" element={<DashboardLayout level="district"><ManageSectors /></DashboardLayout>} />
+          <Route path="/dashboard/district/statistics" element={<DashboardLayout level="district"><DistrictStatistics /></DashboardLayout>} />
           <Route path="/dashboard/district/reports" element={<DashboardLayout level="district"><DistrictReports /></DashboardLayout>} />
           <Route path="/dashboard/district/notifications" element={<DashboardLayout level="district"><DistrictNotifications /></DashboardLayout>} />
           <Route path="/dashboard/district/settings" element={<DashboardLayout level="district"><DistrictSettings /></DashboardLayout>} />
           <Route path="/dashboard/district/calendar" element={<DashboardLayout level="district"><DistrictCalendar /></DashboardLayout>} />
-          <Route path="/dashboard/district/sectors" element={<DashboardLayout level="district"><ManageSectors /></DashboardLayout>} />
-          <Route path="/dashboard/district/statistics" element={<DashboardLayout level="district"><DistrictStatistics /></DashboardLayout>} />
 
         </Routes>
       </div>
