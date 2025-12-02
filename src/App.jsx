@@ -103,7 +103,15 @@ function App() {
           <Route path="/logout" element={<Logout />} />
 
           {/* =================== ADMIN ROUTES =================== */}
-          <Route path="/admin" element={<AdminLayout><AdminDashboard /></AdminLayout>} />
+          <Route
+            path="/dashboard/admin"
+            element={
+              <AdminLayout>
+                <AdminDashboard />
+              </AdminLayout>
+            }
+          />
+
           <Route path="/admin/manage-users" element={<AdminLayout><ManageUsers /></AdminLayout>} />
           <Route path="/admin/manage-district" element={<AdminLayout><ManageDistrict /></AdminLayout>} />
           <Route path="/admin/manage-isibos" element={<AdminLayout><ManageIsibo /></AdminLayout>} />

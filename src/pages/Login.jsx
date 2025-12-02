@@ -30,6 +30,9 @@ const Login = () => {
 
       // Redirect based on role
       switch (user.role) {
+        case "admin":
+          navigate("/dashboard/admin");  // <-- this is the path
+          break;
         case "isibo_leader":
           navigate("/dashboard/isibo");
           break;
@@ -48,6 +51,7 @@ const Login = () => {
         default:
           navigate("/dashboard");
       }
+
 
     } catch (err) {
       console.error(err);

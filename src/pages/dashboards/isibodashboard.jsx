@@ -1,30 +1,60 @@
-import React, { useState } from "react";
-import Footer from "../../components/Footer";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "../../styles/isiboDashboard.css";
 
+const API_BASE = "http://localhost:5000/api/isibo"; // change if needed
+
 const IsiboDashboard = () => {
-  const [households, setHouseholds] = useState([
-    { id: 1, head: "Jean Bosco", members: 5, location: "Hse 12", date: "2025-05-01" },
-    { id: 2, head: "Aline Nyirah", members: 3, location: "Hse 21", date: "2025-05-07" },
-  ]);
+  const [households, setHouseholds] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [totalRequestsSent, setTotalRequestsSent] = useState(0);
+  const [error, setError] = useState("");
 
-  const [totalRequestsSent, setTotalRequestsSent] = useState(5);
+  // ➜ Fetch households on load
+  useEffect(() => {
+    const fetchHouseholds = async () => {
+      try {
+        const res = await axios.get(`${API_BASE}/households`);
+        setHouseholds(res.data.households);
+        setTotalRequestsSent(res.data.households.length);
+        setLoading(false);
+      } catch (err) {
+        console.error(err);
+        setError("Failed to load households.");
+        setLoading(false);
+      }
+    };
 
-  const addHousehold = (e) => {
+    fetchHouseholds();
+  }, []);
+
+  // ➜ Add household handler
+  const addHousehold = async (e) => {
     e.preventDefault();
     const form = e.target;
+
     const newHousehold = {
-      id: households.length + 1,
       head: form.head.value,
       members: parseInt(form.members.value),
       location: form.location.value,
-      date: new Date().toISOString().split("T")[0],
     };
-    setHouseholds([...households, newHousehold]);
-    setTotalRequestsSent(totalRequestsSent + 1);
-    form.reset();
-    alert("Household submitted for Cell approval!");
+
+    try {
+      const res = await axios.post(`${API_BASE}/households`, newHousehold);
+
+      // Update UI instantly
+      setHouseholds([...households, res.data.household]);
+      setTotalRequestsSent(totalRequestsSent + 1);
+
+      form.reset();
+      alert("Household submitted for Cell approval!");
+    } catch (err) {
+      console.error(err);
+      alert("Error submitting household.");
+    }
   };
+
+  if (loading) return <p className="loading">Loading...</p>;
 
   return (
     <div className="page-with-sidebar">
@@ -35,13 +65,15 @@ const IsiboDashboard = () => {
             <p>Manage households and send updates to your Cell leader.</p>
           </header>
 
+          {error && <p className="error">{error}</p>}
+
           <section className="cards-container">
             <div className="card blue">
               <h3>Total Households</h3>
               <p>{households.length}</p>
             </div>
             <div className="card green">
-              <h3>New Requests Sent</h3>
+              <h3>Requests Sent</h3>
               <p>{totalRequestsSent}</p>
             </div>
             <div className="card orange">
@@ -77,7 +109,7 @@ const IsiboDashboard = () => {
                     <td>{h.head}</td>
                     <td>{h.members}</td>
                     <td>{h.location}</td>
-                    <td>{h.date}</td>
+                    <td>{h.date_added?.split("T")[0]}</td>
                   </tr>
                 ))}
               </tbody>
