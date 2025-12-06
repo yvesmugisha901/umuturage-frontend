@@ -1,21 +1,69 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "../../styles/isiboPages.css";
 
 const Notifications = () => {
-  const [notifications, setNotifications] = useState([
-    { id: 1, message: "New household added: Household A", date: "2025-11-25", read: false },
-    { id: 2, message: "Report generated for this month", date: "2025-11-24", read: true },
-    { id: 3, message: "Upcoming community event scheduled", date: "2025-11-28", read: false },
-  ]);
+  const [notifications, setNotifications] = useState([]);
 
-  const markAllAsRead = () => {
-    setNotifications(notifications.map(n => ({ ...n, read: true })));
+  // Fetch notifications from backend
+  const fetchNotifications = async () => {
+    try {
+      const token = localStorage.getItem("token"); // your JWT token
+      const res = await axios.get("http://localhost:5000/api/isibo/notifications", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setNotifications(res.data.notifications);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to load notifications");
+    }
   };
 
-  const toggleRead = (id) => {
-    setNotifications(
-      notifications.map(n => n.id === id ? { ...n, read: true } : n)
-    );
+  useEffect(() => {
+    fetchNotifications();
+  }, []);
+
+  // Mark all notifications as read locally and on server
+  const markAllAsRead = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      await Promise.all(
+        notifications
+          .filter(n => n.status !== "read")
+          .map(n =>
+            axios.put(
+              `http://localhost:5000/api/isibo/notifications/${n.id}/read`,
+              {},
+              { headers: { Authorization: `Bearer ${token}` } }
+            )
+          )
+      );
+      // Update local state
+      setNotifications(notifications.map(n => ({ ...n, status: "read" })));
+    } catch (error) {
+      console.error(error);
+      alert("Failed to mark all as read");
+    }
+  };
+
+  // Toggle a single notification to read
+  const toggleRead = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.put(
+        `http://localhost:5000/api/isibo/notifications/${id}/read`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setNotifications(
+        notifications.map(n =>
+          n.id === id ? { ...n, status: "read" } : n
+        )
+      );
+    } catch (error) {
+      console.error(error);
+      alert("Failed to mark notification as read");
+    }
   };
 
   return (
@@ -28,16 +76,22 @@ const Notifications = () => {
       </div>
 
       <div className="notifications-container">
-        {notifications.map((notif) => (
-          <div
-            key={notif.id}
-            className={`notification-card ${notif.read ? "read" : "unread"}`}
-            onClick={() => toggleRead(notif.id)}
-          >
-            <p className="notification-message">{notif.message}</p>
-            <span className="notification-date">{notif.date}</span>
-          </div>
-        ))}
+        {notifications.length === 0 ? (
+          <p>No notifications yet</p>
+        ) : (
+          notifications.map((notif) => (
+            <div
+              key={notif.id}
+              className={`notification-card ${notif.status === "read" ? "read" : "unread"}`}
+              onClick={() => toggleRead(notif.id)}
+            >
+              <p className="notification-message">{notif.message}</p>
+              <span className="notification-date">
+                {new Date(notif.created_at || notif.date).toLocaleDateString()}
+              </span>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

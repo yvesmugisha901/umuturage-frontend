@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "../../styles/settings.css";
 import { FaCamera, FaTrash, FaSun, FaMoon, FaSave } from "react-icons/fa";
 
 const DEFAULT_PROFILE = {
   fullName: "John Doe",
-  username: "johndoe",
-  email: "john.doe@example.com",
+  username: "",
+  email: "",
   phone: "+250 788 000 000",
   role: "isibo",
   avatarDataUrl: null,
@@ -26,17 +27,33 @@ const IsiboSettings = () => {
   const [saving, setSaving] = useState(false);
   const [theme, setTheme] = useState("light");
 
+  // Load settings from server on mount
   useEffect(() => {
-    try {
-      const savedProfile = JSON.parse(localStorage.getItem(StorageKeys.PROFILE)) || DEFAULT_PROFILE;
-      const savedTheme = localStorage.getItem(StorageKeys.THEME) || "light";
-      setProfile(savedProfile);
-      setInitialProfile(savedProfile);
-      setTheme(savedTheme);
-      applyTheme(savedTheme);
-    } catch (err) {
-      console.error("Failed to load profile/theme", err);
-    }
+    const fetchSettings = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const res = await axios.get("http://localhost:5000/api/isibo/settings", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const userSettings = res.data.settings;
+        const updatedProfile = {
+          ...profile,
+          username: userSettings.username,
+          email: userSettings.email,
+        };
+        setProfile(updatedProfile);
+        setInitialProfile(updatedProfile);
+
+        // Load theme from localStorage
+        const savedTheme = localStorage.getItem(StorageKeys.THEME) || "light";
+        setTheme(savedTheme);
+        applyTheme(savedTheme);
+      } catch (err) {
+        console.error("Failed to load settings", err);
+      }
+    };
+    fetchSettings();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const hasProfileChanged = () => JSON.stringify(profile) !== JSON.stringify(initialProfile);
@@ -54,10 +71,11 @@ const IsiboSettings = () => {
     const file = e.target.files[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = (ev) => setProfile(prev => ({ ...prev, avatarDataUrl: ev.target.result }));
+    reader.onload = (ev) => setProfile((prev) => ({ ...prev, avatarDataUrl: ev.target.result }));
     reader.readAsDataURL(file);
   };
-  const removeAvatar = () => setProfile(prev => ({ ...prev, avatarDataUrl: null }));
+  const removeAvatar = () => setProfile((prev) => ({ ...prev, avatarDataUrl: null }));
+
   const applyTheme = (t) => {
     const root = document.documentElement;
     if (t === "dark") root.classList.add("u-dark");
@@ -70,24 +88,42 @@ const IsiboSettings = () => {
     applyTheme(next);
   };
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
     if (hasPasswordChange() && !validPasswordForSave()) {
-      setPwdMessage("Password change invalid. Ensure old password is filled, new password is 8+ chars and matches confirm.");
+      setPwdMessage(
+        "Password change invalid. Ensure old password is filled, new password is 8+ chars and matches confirm."
+      );
       return;
     }
     setSaving(true);
-    setTimeout(() => {
-      localStorage.setItem(StorageKeys.PROFILE, JSON.stringify(profile));
-      localStorage.setItem(StorageKeys.THEME, theme);
+    try {
+      const token = localStorage.getItem("token");
+      const payload = {
+        username: profile.username,
+        email: profile.email,
+        password: newPassword ? newPassword : undefined,
+      };
+      await axios.put("http://localhost:5000/api/isibo/settings", payload, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
       setInitialProfile(profile);
       setOldPassword("");
       setNewPassword("");
       setConfirmPassword("");
       setPwdMessage("Saved successfully.");
+
+      // Persist locally for instant UI
+      localStorage.setItem(StorageKeys.PROFILE, JSON.stringify(profile));
+      localStorage.setItem(StorageKeys.THEME, theme);
+    } catch (err) {
+      console.error(err);
+      setPwdMessage("Failed to save settings.");
+    } finally {
       setSaving(false);
       setTimeout(() => setPwdMessage(null), 3000);
-    }, 900);
+    }
   };
 
   return (
@@ -96,47 +132,103 @@ const IsiboSettings = () => {
       <form className="settings-grid" onSubmit={handleSave}>
         {/* Profile Card */}
         <section className="card profile-card">
-          <div className="card-header"><h2>Profile</h2></div>
+          <div className="card-header">
+            <h2>Profile</h2>
+          </div>
           <div className="profile-inner">
             <div className="avatar-column">
               <div className="avatar-preview">
-                {profile.avatarDataUrl ? <img src={profile.avatarDataUrl} alt="avatar preview" className="avatar-img" /> : <div className="avatar-placeholder">{profile.fullName.charAt(0).toUpperCase()}</div>}
+                {profile.avatarDataUrl ? (
+                  <img src={profile.avatarDataUrl} alt="avatar preview" className="avatar-img" />
+                ) : (
+                  <div className="avatar-placeholder">{profile.fullName.charAt(0).toUpperCase()}</div>
+                )}
                 <div className="avatar-actions">
                   <label className="avatar-upload-btn">
                     <input type="file" accept="image/*" onChange={handleAvatarChange} />
                     <FaCamera /> Upload
                   </label>
-                  {profile.avatarDataUrl && <button type="button" className="avatar-remove-btn" onClick={removeAvatar}><FaTrash /> Remove</button>}
+                  {profile.avatarDataUrl && (
+                    <button type="button" className="avatar-remove-btn" onClick={removeAvatar}>
+                      <FaTrash /> Remove
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
             <div className="fields-column">
-              <label className="field"><span>Full Name</span><input type="text" value={profile.fullName} onChange={e => setProfile({...profile, fullName: e.target.value})} /></label>
-              <label className="field"><span>Username</span><input type="text" value={profile.username} onChange={e => setProfile({...profile, username: e.target.value})} /></label>
-              <label className="field"><span>Email</span><input type="email" value={profile.email} onChange={e => setProfile({...profile, email: e.target.value})} /></label>
-              <label className="field"><span>Phone</span><input type="text" value={profile.phone} onChange={e => setProfile({...profile, phone: e.target.value})} /></label>
-              <label className="field"><span>Role</span><input type="text" value={profile.role} readOnly className="readonly" /></label>
+              <label className="field">
+                <span>Full Name</span>
+                <input
+                  type="text"
+                  value={profile.fullName}
+                  onChange={(e) => setProfile({ ...profile, fullName: e.target.value })}
+                />
+              </label>
+              <label className="field">
+                <span>Username</span>
+                <input
+                  type="text"
+                  value={profile.username}
+                  onChange={(e) => setProfile({ ...profile, username: e.target.value })}
+                />
+              </label>
+              <label className="field">
+                <span>Email</span>
+                <input
+                  type="email"
+                  value={profile.email}
+                  onChange={(e) => setProfile({ ...profile, email: e.target.value })}
+                />
+              </label>
+              <label className="field">
+                <span>Phone</span>
+                <input
+                  type="text"
+                  value={profile.phone}
+                  onChange={(e) => setProfile({ ...profile, phone: e.target.value })}
+                />
+              </label>
+              <label className="field">
+                <span>Role</span>
+                <input type="text" value={profile.role} readOnly className="readonly" />
+              </label>
             </div>
           </div>
         </section>
 
         {/* Account Card */}
         <section className="card account-card">
-          <div className="card-header"><h2>Account & Security</h2></div>
+          <div className="card-header">
+            <h2>Account & Security</h2>
+          </div>
           <div className="card-body">
-            <label className="field"><span>Old Password</span><input type="password" value={oldPassword} onChange={e => setOldPassword(e.target.value)} /></label>
-            <label className="field"><span>New Password</span><input type="password" value={newPassword} onChange={e => setNewPassword(e.target.value)} /></label>
-            <label className="field"><span>Confirm New Password</span><input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} /></label>
+            <label className="field">
+              <span>Old Password</span>
+              <input type="password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} />
+            </label>
+            <label className="field">
+              <span>New Password</span>
+              <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+            </label>
+            <label className="field">
+              <span>Confirm New Password</span>
+              <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+            </label>
             {pwdMessage && <div className="status-message">{pwdMessage}</div>}
           </div>
           <div className="card-footer">
-            <button type="submit" className="btn save-btn" disabled={!canSave() || saving}><FaSave /> {saving ? "Saving..." : "Save Changes"}</button>
+            <button type="submit" className="btn save-btn" disabled={!canSave() || saving}>
+              <FaSave /> {saving ? "Saving..." : "Save Changes"}
+            </button>
           </div>
         </section>
 
         {/* Appearance Card */}
         <section className="card appearance-card">
-          <div className="card-header"><h2>Appearance</h2></div>
+          <div className="card-header">
+            <h2>Appearance</h2>
+          </div>
           <div className="card-body appearance-body">
             <div className="theme-row">
               <div className="theme-left">
@@ -145,7 +237,7 @@ const IsiboSettings = () => {
               </div>
               <div className="theme-toggle">
                 <label className="switch">
-                  <input type="checkbox" checked={theme==="dark"} onChange={toggleTheme} />
+                  <input type="checkbox" checked={theme === "dark"} onChange={toggleTheme} />
                   <span className="slider" />
                 </label>
               </div>

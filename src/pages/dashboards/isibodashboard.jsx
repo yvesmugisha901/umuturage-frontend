@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../styles/isiboDashboard.css";
 
-const API_BASE = "http://localhost:5000/api/isibo"; // change if needed
+const API_BASE = "http://localhost:5000/api/isibo"; // Make sure backend is running on this port
 
 const IsiboDashboard = () => {
   const [households, setHouseholds] = useState([]);
@@ -10,17 +10,29 @@ const IsiboDashboard = () => {
   const [totalRequestsSent, setTotalRequestsSent] = useState(0);
   const [error, setError] = useState("");
 
-  // ➜ Fetch households on load
+  // Fetch households from backend
   useEffect(() => {
     const fetchHouseholds = async () => {
       try {
-        const res = await axios.get(`${API_BASE}/households`);
-        setHouseholds(res.data.households);
-        setTotalRequestsSent(res.data.households.length);
+        const token = localStorage.getItem("token"); // Get JWT token from login
+        if (!token) throw new Error("Unauthorized. Please login.");
+
+        const res = await axios.get(`${API_BASE}/households`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        // Safe check if res.data is array or object with key 'households'
+        const fetchedHouseholds = Array.isArray(res.data)
+          ? res.data
+          : res.data.households || [];
+
+        setHouseholds(fetchedHouseholds);
+        setTotalRequestsSent(fetchedHouseholds.length);
         setLoading(false);
       } catch (err) {
         console.error(err);
-        setError("Failed to load households.");
+        setError("Failed to load households. Check backend connection or login.");
+        setHouseholds([]); // ensures .map won't crash
         setLoading(false);
       }
     };
@@ -28,11 +40,10 @@ const IsiboDashboard = () => {
     fetchHouseholds();
   }, []);
 
-  // ➜ Add household handler
+  // Add household
   const addHousehold = async (e) => {
     e.preventDefault();
     const form = e.target;
-
     const newHousehold = {
       head: form.head.value,
       members: parseInt(form.members.value),
@@ -40,17 +51,21 @@ const IsiboDashboard = () => {
     };
 
     try {
-      const res = await axios.post(`${API_BASE}/households`, newHousehold);
+      const token = localStorage.getItem("token");
+      if (!token) throw new Error("Unauthorized. Please login.");
 
-      // Update UI instantly
-      setHouseholds([...households, res.data.household]);
+      const res = await axios.post(`${API_BASE}/households`, newHousehold, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      setHouseholds([res.data.household, ...households]); // Add newest household on top
       setTotalRequestsSent(totalRequestsSent + 1);
 
       form.reset();
       alert("Household submitted for Cell approval!");
     } catch (err) {
       console.error(err);
-      alert("Error submitting household.");
+      alert("Error submitting household. Check backend or login.");
     }
   };
 
@@ -109,7 +124,7 @@ const IsiboDashboard = () => {
                     <td>{h.head}</td>
                     <td>{h.members}</td>
                     <td>{h.location}</td>
-                    <td>{h.date_added?.split("T")[0]}</td>
+                    <td>{h.date_added ? h.date_added.split("T")[0] : "–"}</td>
                   </tr>
                 ))}
               </tbody>
