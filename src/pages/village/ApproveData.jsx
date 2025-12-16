@@ -1,48 +1,138 @@
-// src/pages/village/ApproveData.jsx
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../../styles/villagePages.css";
 
 const ApproveVillageData = () => {
+  const [pendingUpdates, setPendingUpdates] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchPendingUpdates = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setError("You must be logged in to view pending updates.");
+        setLoading(false);
+        return;
+      }
+
+      const res = await fetch("http://localhost:5000/api/village/pending-updates", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) {
+        const text = await res.text(); // capture HTML response if any
+        console.error("Server response:", text);
+        throw new Error(`Failed to fetch pending updates: ${res.status}`);
+      }
+
+      const data = await res.json();
+      setPendingUpdates(data);
+    } catch (err) {
+      console.error(err);
+      setError(err.message || "Failed to fetch pending updates");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPendingUpdates();
+  }, []);
+
+  const handleApprove = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      const res = await fetch(`http://localhost:5000/api/village/pending-updates/${id}/approve`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) throw new Error("Failed to approve update");
+      fetchPendingUpdates(); // refresh table
+    } catch (err) {
+      console.error(err);
+      setError(err.message || "Failed to approve update");
+    }
+  };
+
+  const handleReject = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      const res = await fetch(`http://localhost:5000/api/village/pending-updates/${id}/reject`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) throw new Error("Failed to reject update");
+      fetchPendingUpdates(); // refresh table
+    } catch (err) {
+      console.error(err);
+      setError(err.message || "Failed to reject update");
+    }
+  };
+
   return (
     <div className="village-page-container">
       <h1 className="village-title">Approve Isibo Data</h1>
 
-      <table className="village-data-table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Isibo</th>
-            <th>Change Type</th>
-            <th>Submitted By</th>
-            <th>Date</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Isibo A1</td>
-            <td>New Household</td>
-            <td>Leader Bosco</td>
-            <td>2025-11-20</td>
-            <td>
-              <button className="village-btn village-btn-approve">Approve</button>
-              <button className="village-btn village-btn-delete">Reject</button>
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Isibo B2</td>
-            <td>Update Member</td>
-            <td>Leader Jean</td>
-            <td>2025-11-21</td>
-            <td>
-              <button className="village-btn village-btn-approve">Approve</button>
-              <button className="village-btn village-btn-delete">Reject</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      {loading ? (
+        <p>Loading pending updates...</p>
+      ) : error ? (
+        <p className="error-text">{error}</p>
+      ) : pendingUpdates.length === 0 ? (
+        <p>No pending updates to approve.</p>
+      ) : (
+        <table className="village-data-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Isibo</th>
+              <th>Change Type</th>
+              <th>Submitted By</th>
+              <th>Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {pendingUpdates.map((update, index) => (
+              <tr key={update.id}>
+                <td>{index + 1}</td>
+                <td>{update.isibo_name}</td>
+                <td>{update.change_type}</td>
+                <td>{update.submitted_by}</td>
+                <td>{new Date(update.date_submitted).toLocaleDateString()}</td>
+                <td>
+                  <button
+                    className="village-btn village-btn-approve"
+                    onClick={() => handleApprove(update.id)}
+                  >
+                    Approve
+                  </button>
+                  <button
+                    className="village-btn village-btn-delete"
+                    onClick={() => handleReject(update.id)}
+                  >
+                    Reject
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 };

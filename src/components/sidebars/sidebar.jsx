@@ -60,11 +60,6 @@ const Sidebar = ({ level }) => {
               </Link>
             </li>
             <li>
-              <Link to="/dashboard/village/households">
-                <FaHome className="icon" /> Households List
-              </Link>
-            </li>
-            <li>
               <Link to="/dashboard/village/reports">
                 <FaClipboardList className="icon" /> Reports
               </Link>

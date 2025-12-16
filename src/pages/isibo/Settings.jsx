@@ -4,20 +4,20 @@ import "../../styles/settings.css";
 import { FaCamera, FaTrash, FaSun, FaMoon, FaSave } from "react-icons/fa";
 
 const DEFAULT_PROFILE = {
-  fullName: "John Doe",
   username: "",
   email: "",
-  phone: "+250 788 000 000",
-  role: "isibo",
-  avatarDataUrl: null,
+  role: "village",
+  fullName: "N/A", // placeholder for UI
+  phone: "N/A",    // placeholder for UI
+  avatarDataUrl: null, // placeholder for UI
 };
 
 const StorageKeys = {
-  PROFILE: "um_isibo_profile",
-  THEME: "um_isibo_theme",
+  PROFILE: "um_village_profile",
+  THEME: "um_village_theme",
 };
 
-const IsiboSettings = () => {
+const VillageSettings = () => {
   const [profile, setProfile] = useState(DEFAULT_PROFILE);
   const [initialProfile, setInitialProfile] = useState(DEFAULT_PROFILE);
   const [oldPassword, setOldPassword] = useState("");
@@ -27,36 +27,40 @@ const IsiboSettings = () => {
   const [saving, setSaving] = useState(false);
   const [theme, setTheme] = useState("light");
 
-  // Load settings from server on mount
+  // Load profile from backend
   useEffect(() => {
-    const fetchSettings = async () => {
+    const fetchProfile = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:5000/api/isibo/settings", {
+        const res = await axios.get("http://localhost:5000/api/village/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        const userSettings = res.data.settings;
+
+        const userSettings = res.data;
         const updatedProfile = {
           ...profile,
           username: userSettings.username,
           email: userSettings.email,
+          role: "village",
         };
+
         setProfile(updatedProfile);
         setInitialProfile(updatedProfile);
 
-        // Load theme from localStorage
+        // Load theme
         const savedTheme = localStorage.getItem(StorageKeys.THEME) || "light";
         setTheme(savedTheme);
         applyTheme(savedTheme);
       } catch (err) {
-        console.error("Failed to load settings", err);
+        console.error("Failed to load profile", err);
       }
     };
-    fetchSettings();
+    fetchProfile();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const hasProfileChanged = () => JSON.stringify(profile) !== JSON.stringify(initialProfile);
+  const hasProfileChanged = () =>
+    profile.username !== initialProfile.username || profile.email !== initialProfile.email;
   const hasPasswordChange = () => oldPassword || newPassword || confirmPassword;
   const validPasswordForSave = () => {
     if (!hasPasswordChange()) return false;
@@ -66,15 +70,6 @@ const IsiboSettings = () => {
     return true;
   };
   const canSave = () => hasProfileChanged() || validPasswordForSave();
-
-  const handleAvatarChange = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (ev) => setProfile((prev) => ({ ...prev, avatarDataUrl: ev.target.result }));
-    reader.readAsDataURL(file);
-  };
-  const removeAvatar = () => setProfile((prev) => ({ ...prev, avatarDataUrl: null }));
 
   const applyTheme = (t) => {
     const root = document.documentElement;
@@ -87,6 +82,16 @@ const IsiboSettings = () => {
     localStorage.setItem(StorageKeys.THEME, next);
     applyTheme(next);
   };
+
+  const handleAvatarChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) =>
+      setProfile((prev) => ({ ...prev, avatarDataUrl: ev.target.result }));
+    reader.readAsDataURL(file);
+  };
+  const removeAvatar = () => setProfile((prev) => ({ ...prev, avatarDataUrl: null }));
 
   const handleSave = async (e) => {
     e.preventDefault();
@@ -102,9 +107,9 @@ const IsiboSettings = () => {
       const payload = {
         username: profile.username,
         email: profile.email,
-        password: newPassword ? newPassword : undefined,
+        ...(newPassword ? { oldPassword, newPassword } : {}),
       };
-      await axios.put("http://localhost:5000/api/isibo/settings", payload, {
+      await axios.put("http://localhost:5000/api/village/profile", payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -114,7 +119,6 @@ const IsiboSettings = () => {
       setConfirmPassword("");
       setPwdMessage("Saved successfully.");
 
-      // Persist locally for instant UI
       localStorage.setItem(StorageKeys.PROFILE, JSON.stringify(profile));
       localStorage.setItem(StorageKeys.THEME, theme);
     } catch (err) {
@@ -128,7 +132,7 @@ const IsiboSettings = () => {
 
   return (
     <div className="settings-page container">
-      <h1 className="page-title">Isibo Settings</h1>
+      <h1 className="page-title">Village Settings</h1>
       <form className="settings-grid" onSubmit={handleSave}>
         {/* Profile Card */}
         <section className="card profile-card">
@@ -139,9 +143,9 @@ const IsiboSettings = () => {
             <div className="avatar-column">
               <div className="avatar-preview">
                 {profile.avatarDataUrl ? (
-                  <img src={profile.avatarDataUrl} alt="avatar preview" className="avatar-img" />
+                  <img src={profile.avatarDataUrl} alt="avatar" className="avatar-img" />
                 ) : (
-                  <div className="avatar-placeholder">{profile.fullName.charAt(0).toUpperCase()}</div>
+                  <div className="avatar-placeholder">{profile.fullName.charAt(0)}</div>
                 )}
                 <div className="avatar-actions">
                   <label className="avatar-upload-btn">
@@ -157,14 +161,6 @@ const IsiboSettings = () => {
               </div>
             </div>
             <div className="fields-column">
-              <label className="field">
-                <span>Full Name</span>
-                <input
-                  type="text"
-                  value={profile.fullName}
-                  onChange={(e) => setProfile({ ...profile, fullName: e.target.value })}
-                />
-              </label>
               <label className="field">
                 <span>Username</span>
                 <input
@@ -182,14 +178,6 @@ const IsiboSettings = () => {
                 />
               </label>
               <label className="field">
-                <span>Phone</span>
-                <input
-                  type="text"
-                  value={profile.phone}
-                  onChange={(e) => setProfile({ ...profile, phone: e.target.value })}
-                />
-              </label>
-              <label className="field">
                 <span>Role</span>
                 <input type="text" value={profile.role} readOnly className="readonly" />
               </label>
@@ -197,7 +185,7 @@ const IsiboSettings = () => {
           </div>
         </section>
 
-        {/* Account Card */}
+        {/* Account & Security */}
         <section className="card account-card">
           <div className="card-header">
             <h2>Account & Security</h2>
@@ -249,4 +237,4 @@ const IsiboSettings = () => {
   );
 };
 
-export default IsiboSettings;
+export default VillageSettings;
