@@ -1,49 +1,57 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../styles/isiboDashboard.css";
-
-const API_BASE = "http://localhost:5000/api/isibo"; // Make sure backend is running on this port
+import { API_BASE, getAuthHeaders } from "../../utils/config.js";
 
 const IsiboDashboard = () => {
   const [households, setHouseholds] = useState([]);
   const [loading, setLoading] = useState(true);
   const [totalRequestsSent, setTotalRequestsSent] = useState(0);
+  const [pendingApprovals, setPendingApprovals] = useState(0);
   const [error, setError] = useState("");
 
-  // Fetch households from backend
+  // Fetch households & reports from backend
   useEffect(() => {
-    const fetchHouseholds = async () => {
+    const fetchData = async () => {
       try {
-        const token = localStorage.getItem("token"); // Get JWT token from login
+        const token = localStorage.getItem("token");
         if (!token) throw new Error("Unauthorized. Please login.");
 
-        const res = await axios.get(`${API_BASE}/households`, {
-          headers: { Authorization: `Bearer ${token}` },
+        // Fetch households
+        const resHouseholds = await axios.get(`${API_BASE}/households`, {
+          headers: getAuthHeaders(),
         });
 
-        // Safe check if res.data is array or object with key 'households'
-        const fetchedHouseholds = Array.isArray(res.data)
-          ? res.data
-          : res.data.households || [];
+        const fetchedHouseholds = Array.isArray(resHouseholds.data)
+          ? resHouseholds.data
+          : resHouseholds.data.households || [];
 
         setHouseholds(fetchedHouseholds);
         setTotalRequestsSent(fetchedHouseholds.length);
+
+        // Fetch pending approvals if backend supports
+        const resReports = await axios.get(`${API_BASE}/reports`, {
+          headers: getAuthHeaders(),
+        });
+        setPendingApprovals(resReports.data.pendingApprovals || 0);
+
         setLoading(false);
       } catch (err) {
         console.error(err);
-        setError("Failed to load households. Check backend connection or login.");
-        setHouseholds([]); // ensures .map won't crash
+        setError("Failed to load data. Check backend or login.");
+        setHouseholds([]);
         setLoading(false);
       }
     };
 
-    fetchHouseholds();
+    fetchData();
   }, []);
 
-  // Add household
+  // Add new household
   const addHousehold = async (e) => {
     e.preventDefault();
     const form = e.target;
+
     const newHousehold = {
       head: form.head.value,
       members: parseInt(form.members.value),
@@ -51,16 +59,12 @@ const IsiboDashboard = () => {
     };
 
     try {
-      const token = localStorage.getItem("token");
-      if (!token) throw new Error("Unauthorized. Please login.");
-
       const res = await axios.post(`${API_BASE}/households`, newHousehold, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: getAuthHeaders(),
       });
 
-      setHouseholds([res.data.household, ...households]); // Add newest household on top
+      setHouseholds([res.data.household, ...households]);
       setTotalRequestsSent(totalRequestsSent + 1);
-
       form.reset();
       alert("Household submitted for Cell approval!");
     } catch (err) {
@@ -93,7 +97,7 @@ const IsiboDashboard = () => {
             </div>
             <div className="card orange">
               <h3>Pending Approvals</h3>
-              <p>–</p>
+              <p>{pendingApprovals}</p>
             </div>
           </section>
 
@@ -124,7 +128,7 @@ const IsiboDashboard = () => {
                     <td>{h.head}</td>
                     <td>{h.members}</td>
                     <td>{h.location}</td>
-                    <td>{h.date_added ? h.date_added.split("T")[0] : "–"}</td>
+                    <td>{h.date_added?.split("T")[0] ?? "–"}</td>
                   </tr>
                 ))}
               </tbody>
