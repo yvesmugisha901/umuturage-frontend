@@ -1,58 +1,89 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/navbar.css";
-import { Link } from "react-router-dom"; // ✅ Import Link
+import { Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
+  const [mobileMenu, setMobileMenu] = useState(false);
+  const location = useLocation();
+
+  const toggleMenu = () => setMobileMenu(!mobileMenu);
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        {/* Logo */}
+        {/* Logo with hover animation */}
         <div className="logo">
-          <img
-            src="https://via.placeholder.com/150x50?text=LOGO"
-            alt="Umuturage Logo"
-          />
+          <Link to="/">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+              alt="Abaturage Logo"
+              className="logo-img"
+            />
+          </Link>
+        </div>
+
+        {/* Hamburger menu for mobile */}
+        <div className="hamburger" onClick={toggleMenu}>
+          <span className={mobileMenu ? "bar rotate1" : "bar"}></span>
+          <span className={mobileMenu ? "bar fade" : "bar"}></span>
+          <span className={mobileMenu ? "bar rotate2" : "bar"}></span>
         </div>
 
         {/* Navigation Links */}
-        <ul className="nav-links">
+        <ul className={mobileMenu ? "nav-links active" : "nav-links"}>
           <li>
-            <Link to="/">Home</Link>
+            <Link
+              to="/"
+              className={location.pathname === "/" ? "active-link" : ""}
+            >
+              Home
+            </Link>
           </li>
           <li>
-            <a href="#">Features</a>
+            <Link
+              to="/features"
+              className={location.pathname === "/features" ? "active-link" : ""}
+            >
+              Features
+            </Link>
           </li>
           <li>
-            <a href="#">Households</a>
+            <Link
+              to="/households"
+              className={location.pathname === "/households" ? "active-link" : ""}
+            >
+              Households
+            </Link>
           </li>
           <li>
-            <a href="#">About</a>
+            <Link
+              to="/about"
+              className={location.pathname === "/about" ? "active-link" : ""}
+            >
+              About
+            </Link>
           </li>
           <li>
-            <a href="#">Contact</a>
+            <Link
+              to="/contact"
+              className={location.pathname === "/contact" ? "active-link" : ""}
+            >
+              Contact
+            </Link>
           </li>
         </ul>
 
-        {/* Right side buttons */}
+        {/* Right-side actions */}
         <div className="nav-actions">
-          <Link
-            to="/login"
-            className="login-btn"
-          >
+          <Link to="/login" className="nav-btn login-btn">
             Login
           </Link>
-
-          <Link
-            to="/register"
-            className="register-btn"
-          >
+          <Link to="/register" className="nav-btn register-btn">
             Register
           </Link>
-
-          {/* Language selector */}
           <select className="language-selector">
             <option value="en">EN</option>
-            <option value="rw">Kinyarwanda</option>
+            <option value="rw">RW</option>
           </select>
         </div>
       </div>

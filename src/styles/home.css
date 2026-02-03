@@ -7,31 +7,46 @@
 
 /* ------------------- Hero Section ------------------- */
 .hero-section {
-  background: linear-gradient(135deg, #e6e6e6, #ffffff);
-  color: white;
-  padding: 120px 20px;
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
+  background-size: cover;
+  background-position: center;
   position: relative;
   overflow: hidden;
+  transition: background-image 1s ease-in-out;
+}
+
+.hero-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35));
+}
+
+.hero-text {
+  position: relative;
+  z-index: 2;
 }
 
 .hero-title {
   font-size: 3rem;
   font-weight: 700;
   margin-bottom: 20px;
-  animation: fadeUp 1s ease forwards;
+  transition: transform 0.2s ease;
 }
 
 .hero-subtitle {
   font-size: 1.25rem;
   margin-bottom: 40px;
-  opacity: 0;
-  animation: fadeUp 1s 0.3s ease forwards;
+  transition: transform 0.2s ease;
 }
 
 .hero-btn {
-  background-color: white;
-  color: #4f6ef7;
+  background-color: #4f6ef7;
+  color: white;
   padding: 15px 50px;
   border-radius: 50px;
   font-weight: 600;
@@ -40,47 +55,81 @@
 
 .hero-btn:hover {
   transform: scale(1.05);
-  background-color: #e0e7ff;
+  background-color: #3b82f6;
 }
 
-/* ------------------- Objectives Section ------------------- */
-.objectives-section {
+/* Floating shapes */
+.floating-shapes .shape {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: float 10s infinite linear;
+}
+
+.shape-1 {
+  width: 60px;
+  height: 60px;
+  background: #fff;
+  top: 10%;
+  left: 20%;
+}
+
+.shape-2 {
+  width: 80px;
+  height: 80px;
+  background: #ffcd38;
+  top: 30%;
+  left: 75%;
+}
+
+.shape-3 {
+  width: 40px;
+  height: 40px;
+  background: #34d399;
+  top: 60%;
+  left: 40%;
+}
+
+.shape-4 {
+  width: 50px;
+  height: 50px;
+  background: #f472b6;
+  top: 80%;
+  left: 15%;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px) translateX(0px);
+  }
+
+  50% {
+    transform: translateY(-20px) translateX(15px);
+  }
+
+  100% {
+    transform: translateY(0px) translateX(0px);
+  }
+}
+
+/* ------------------- Section Titles ------------------- */
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 50px;
+  color: #2b3542;
+}
+
+/* ------------------- Objectives ------------------- */
+.objectives-section,
+.features-section,
+.cta-section {
   padding: 80px 20px;
   text-align: center;
   background-color: #ffffff;
 }
 
-.objectives-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-  justify-content: center;
-}
-
-.objective-card {
-  background: #e0f2fe;
-  /* Light blue */
-  color: #1f2937;
-  padding: 30px 20px;
-  border-radius: 20px;
-  width: 280px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-  opacity: 0;
-}
-
-.objective-card:hover {
-  transform: translateY(-10px) scale(1.03);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-
-/* ------------------- Features Section ------------------- */
-.features-section {
-  padding: 80px 20px;
-  text-align: center;
-  background-color: #ffffff;
-}
-
+.objectives-container,
 .features-container {
   display: flex;
   flex-wrap: wrap;
@@ -88,18 +137,22 @@
   justify-content: center;
 }
 
+.objective-card,
 .feature-card {
   background: #e0f2fe;
-  /* Light blue */
   color: #1f2937;
   padding: 30px 20px;
   border-radius: 20px;
   width: 280px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   transition: transform 0.4s ease, box-shadow 0.4s ease;
-  opacity: 0;
+  opacity: 1;
+  /* visible immediately */
+  transform: translateY(0);
+  /* reset animation */
 }
 
+.objective-card:hover,
 .feature-card:hover {
   transform: translateY(-10px) scale(1.03);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
@@ -112,12 +165,18 @@
 
 /* ------------------- CTA Section ------------------- */
 .cta-section {
-  background: #ffffff;
-  padding: 100px 20px;
-  text-align: center;
   border-radius: 40px 40px 0 0;
-  color: #1f2937;
   box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.05);
+}
+
+.cta-container h2 {
+  font-size: 2.25rem;
+  margin-bottom: 20px;
+}
+
+.cta-container p {
+  font-size: 1.1rem;
+  margin-bottom: 30px;
 }
 
 .cta-btn {
@@ -134,34 +193,58 @@
   background-color: #3b82f6;
 }
 
-/* ------------------- Animations ------------------- */
-@keyframes fadeUp {
+/* Community overlay silhouettes */
+.community-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.community-overlay .silhouette {
+  position: absolute;
+  bottom: 0;
+  width: 200px;
+  opacity: 0.25;
+  filter: blur(1px);
+  animation: moveSilhouette 25s linear infinite;
+}
+
+.silhouette-1 {
+  left: -200px;
+  animation-delay: 0s;
+}
+
+.silhouette-2 {
+  left: -400px;
+  animation-delay: 8s;
+}
+
+.silhouette-3 {
+  left: -600px;
+  animation-delay: 16s;
+}
+
+@keyframes moveSilhouette {
   0% {
-    opacity: 0;
-    transform: translateY(20px);
+    transform: translateX(0);
   }
 
   100% {
-    opacity: 1;
-    transform: translateY(0);
+    transform: translateX(120vw);
   }
 }
 
-.fade-up {
-  opacity: 0;
-  animation: fadeUp 1s forwards;
-}
-
-.delay-1 {
-  animation-delay: 0.2s;
-}
-
-.delay-2 {
-  animation-delay: 0.4s;
-}
 
 /* ------------------- Responsive ------------------- */
 @media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
 
   .objectives-container,
   .features-container {
@@ -169,11 +252,16 @@
     align-items: center;
   }
 
-  .hero-title {
-    font-size: 2.2rem;
+  .objective-card,
+  .feature-card {
+    width: 90%;
   }
 
-  .hero-subtitle {
+  .cta-container h2 {
+    font-size: 2rem;
+  }
+
+  .cta-container p {
     font-size: 1rem;
   }
 }
