@@ -273,7 +273,7 @@ const Home = () => {
           {/* Administrative Levels */}
           <div className="admin-levels">
             <div className="level">
-              <span className="level-text">Umudugudu</span>
+              <span className="level-text">Umudugudu(Isibo)</span>
               <span className="level-sub">Village</span>
             </div>
             <div className="arrow">→</div>
@@ -312,22 +312,7 @@ const Home = () => {
         </div>
 
        {/* Floating Info Cards */}
-        <div className="floating-preview">
-          <div className="preview-card card-1" style={{ transform: `translateY(${scrollY * -0.3}px)` }}>
-            <div className="card-icon">🔒</div>
-            <div className="card-content">
-              <h4>Maximum Security</h4>
-              <p className="card-kiny">Umutekano ukomeye</p>
-            </div>
-          </div>
-          <div className="preview-card card-2" style={{ transform: `translateY(${scrollY * -0.2}px)` }}>
-            <div className="card-icon">⚡</div>
-            <div className="card-content">
-              <h4>Real-Time</h4>
-              <p className="card-kiny">Ako kanya</p>
-            </div>
-          </div>
-        </div>
+  
       </section> 
 
       {/* Stats Section */}
