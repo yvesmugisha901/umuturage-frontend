@@ -17,7 +17,7 @@ const Settings = () => {
   const fetchProfile = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/village/profile",
+        "http://localhost:5000/api/village/settings",  // CHANGED from /profile to /settings
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -28,7 +28,7 @@ const Settings = () => {
       setProfile({
         username: res.data.username || "",
         email: res.data.email || "",
-        role: res.data.role || ""
+        role: res.data.role || "Village Leader"  // Default role
       });
 
       setLoading(false);
@@ -46,7 +46,7 @@ const Settings = () => {
 
     try {
       await axios.put(
-        "http://localhost:5000/api/village/profile",
+        "http://localhost:5000/api/village/settings",  // CHANGED from /profile to /settings
         {
           username: profile.username,
           email: profile.email
@@ -67,6 +67,7 @@ const Settings = () => {
 
   useEffect(() => {
     fetchProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (loading) return <p>Loading profile...</p>;
@@ -102,6 +103,7 @@ const Settings = () => {
           type="text"
           value={profile.role}
           disabled
+          style={{ backgroundColor: "#f0f0f0", cursor: "not-allowed" }}
         />
 
         <button type="submit">Save Changes</button>
