@@ -1,16 +1,86 @@
-# React + Vite
+# 🏛 Umuturage Administrative Management System (Frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📌 Overview
 
-Currently, two official plugins are available:
+Umuturageconnect is a React-based administrative management platform designed to streamline data reporting and residency management across multiple government levels.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The system supports a hierarchical administrative structure:
 
-## React Compiler
+Isibo → Village (Umudugudu) → Cell → Sector → District → Province
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Data is entered at the lowest level and moves upward for review, approval, or rejection by higher administrative authorities.
 
-## Expanding the ESLint configuration
+This platform ensures transparency, accountability, and structured information flow across administrative units.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+
+## 🎯 Purpose
+
+Managing residency records and administrative reports manually often results in:
+
+- Delayed approvals
+- Data inconsistencies
+- Poor traceability
+- Administrative inefficiencies
+
+Umuturage solves this by introducing a structured digital workflow with role-based access and hierarchical approval mechanisms.
+
+
+
+## 🛠️ Tech Stack
+
+### 🔹 Frontend
+- React.js
+- Functional Components
+- Props
+- Context API (Global State Management)
+- Dynamic Lists with Keys
+- Conditional Rendering
+- React Hooks (useState, useEffect, useContext)
+
+### 🔹 Architecture Approach
+- Component-based modular structure
+- Centralized state management via Context API
+- Reusable UI components
+- Role-based rendering logic
+
+
+
+## 🚀 Core Features
+
+### 👤 Role-Based Access
+- Isibo level: Data entry
+- Village/Cell/Sector: Review and forward
+- District/Province: Approve or Reject
+- Controlled access per administrative level
+
+### 📊 Report Management
+- Create and submit reports
+- View report status
+- Approve or reject submissions
+- Status tracking across levels
+
+### 🏠 Residency Management
+- Register residents
+- Update residency records
+- Track movements between administrative units
+
+### 🔄 Hierarchical Workflow
+- Data originates from lower levels
+- Moves upward through structured approval pipeline
+- Higher authorities validate or reject entries
+
+
+
+## 🏗️ System Design
+
+The application follows a structured frontend architecture:
+
+- Global state handled via Context API
+- Administrative levels represented through structured components
+- Dynamic rendering based on user role
+- Lists rendered with proper key management
+- Separation of concerns between presentation and logic
+
+
+
